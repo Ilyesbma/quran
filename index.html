@@ -7,307 +7,170 @@
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
-
 body {
   font-family: 'DM Sans', -apple-system, sans-serif;
-  background: #0e0c08;
-  min-height: 100vh;
-  color: #f0ebe0;
-  background-image:
-    radial-gradient(ellipse 80% 40% at 50% 0%, rgba(180,140,60,0.08) 0%, transparent 70%);
+  background: #0e0c08; min-height: 100vh; color: #f0ebe0;
+  background-image: radial-gradient(ellipse 80% 40% at 50% 0%, rgba(180,140,60,0.08) 0%, transparent 70%);
 }
-
-/* ── motif géométrique islamique en fond ── */
 body::before {
-  content: '';
-  position: fixed; inset: 0;
+  content: ''; position: fixed; inset: 0;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M30 0 L60 30 L30 60 L0 30Z' fill='none' stroke='rgba(180,140,60,0.06)' stroke-width='0.5'/%3E%3Ccircle cx='30' cy='30' r='12' fill='none' stroke='rgba(180,140,60,0.04)' stroke-width='0.5'/%3E%3C/svg%3E");
   pointer-events: none; z-index: 0;
 }
+.container { max-width: 480px; margin: 0 auto; padding: 0 16px 60px; position: relative; z-index: 1; }
 
-.container {
-  max-width: 480px; margin: 0 auto;
-  padding: 0 16px 40px; position: relative; z-index: 1;
-}
-
-/* ── HEADER ── */
-header {
-  text-align: center;
-  padding: 36px 0 24px;
-  border-bottom: 0.5px solid rgba(180,140,60,0.2);
-  margin-bottom: 24px;
-  position: relative;
-}
-.bismillah {
-  font-family: 'Amiri', serif;
-  font-size: 1.4rem;
-  color: rgba(180,140,60,0.6);
-  margin-bottom: 10px;
-  letter-spacing: .05em;
-}
-.surah-name-ar {
-  font-family: 'Amiri', serif;
-  font-size: clamp(2rem, 8vw, 3rem);
-  color: #c9a84c;
-  line-height: 1.1;
-  min-height: 3.5rem;
-  display: flex; align-items: center; justify-content: center;
-  transition: all .4s ease;
-}
-.surah-name-fr {
-  font-size: .8rem; font-weight: 300;
-  color: rgba(180,140,60,0.5);
-  letter-spacing: .15em; text-transform: uppercase;
-  margin-top: 6px; min-height: 1.2em;
-  transition: all .3s ease;
-}
-.ornement {
-  display: flex; align-items: center; justify-content: center;
-  gap: 10px; margin-top: 14px;
-}
+/* HEADER */
+header { text-align: center; padding: 32px 0 20px; border-bottom: 0.5px solid rgba(180,140,60,0.2); margin-bottom: 20px; }
+.bismillah { font-family: 'Amiri', serif; font-size: 1.3rem; color: rgba(180,140,60,0.5); margin-bottom: 8px; }
+.surah-name-ar { font-family: 'Amiri', serif; font-size: clamp(1.8rem,7vw,2.8rem); color: #c9a84c; line-height: 1.1; min-height: 3rem; display: flex; align-items: center; justify-content: center; transition: all .4s ease; }
+.surah-name-fr { font-size: .78rem; font-weight: 300; color: rgba(180,140,60,0.45); letter-spacing: .14em; text-transform: uppercase; margin-top: 5px; min-height: 1.1em; transition: all .3s ease; }
+.ornement { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 12px; }
 .ornement-line { flex: 1; height: 0.5px; background: linear-gradient(90deg, transparent, rgba(180,140,60,0.3), transparent); }
-.ornement-diamond {
-  width: 7px; height: 7px;
-  background: rgba(180,140,60,0.4);
-  transform: rotate(45deg);
-}
+.ornement-diamond { width: 6px; height: 6px; background: rgba(180,140,60,0.4); transform: rotate(45deg); }
 
-/* ── CARDS ── */
-.card {
-  background: rgba(255,255,255,0.03);
-  border: 0.5px solid rgba(180,140,60,0.15);
-  border-radius: 16px;
-  padding: 20px;
-  margin-bottom: 14px;
-}
-.card-title {
-  font-size: .7rem; font-weight: 500;
-  color: rgba(180,140,60,0.6);
-  letter-spacing: .12em; text-transform: uppercase;
-  margin-bottom: 12px;
-  display: flex; align-items: center; gap: 8px;
-}
-.card-title::before, .card-title::after {
-  content: '◆'; font-size: .45rem; opacity: .5;
-}
+/* CARDS */
+.card { background: rgba(255,255,255,0.03); border: 0.5px solid rgba(180,140,60,0.15); border-radius: 16px; padding: 18px; margin-bottom: 12px; }
+.card-title { font-size: .68rem; font-weight: 500; color: rgba(180,140,60,0.55); letter-spacing: .12em; text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.card-title::before, .card-title::after { content: '◆'; font-size: .4rem; opacity: .5; }
 
-/* ── DROP ZONE ── */
-.drop-zone {
-  border: 1.5px dashed rgba(180,140,60,0.3);
-  border-radius: 12px; padding: 28px 16px;
-  text-align: center; cursor: pointer;
-  background: rgba(180,140,60,0.03);
-  transition: border-color .2s, background .2s;
-  margin-bottom: 10px;
+/* BIBLIOTHÈQUE */
+.lib-empty { text-align: center; padding: 24px 0; color: rgba(240,235,224,0.25); font-size: .82em; }
+.lib-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 12px; border-radius: 10px;
+  border: 0.5px solid rgba(180,140,60,0.12);
+  background: rgba(180,140,60,0.04);
+  margin-bottom: 8px; cursor: pointer;
+  transition: background .2s, border-color .2s;
 }
+.lib-item:hover { background: rgba(180,140,60,0.09); border-color: rgba(180,140,60,0.3); }
+.lib-item-left { display: flex; flex-direction: column; gap: 2px; }
+.lib-item-ar { font-family: 'Amiri', serif; font-size: 1.1rem; color: #c9a84c; }
+.lib-item-fr { font-size: .72rem; color: rgba(240,235,224,0.35); }
+.lib-item-meta { font-size: .68rem; color: rgba(180,140,60,0.4); margin-top: 2px; }
+.lib-item-right { display: flex; align-items: center; gap: 8px; }
+.lib-open { background: rgba(180,140,60,0.15); border: none; border-radius: 7px; padding: 6px 12px; color: #c9a84c; font-size: .75rem; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background .2s; }
+.lib-open:hover { background: rgba(180,140,60,0.28); }
+.lib-del { background: rgba(255,80,80,0.08); border: none; border-radius: 7px; padding: 6px 8px; color: rgba(255,100,100,0.5); font-size: .75rem; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background .2s; }
+.lib-del:hover { background: rgba(255,80,80,0.2); color: #ff6060; }
+
+/* DROP ZONE */
+.drop-zone { border: 1.5px dashed rgba(180,140,60,0.25); border-radius: 12px; padding: 26px 16px; text-align: center; cursor: pointer; background: rgba(180,140,60,0.02); transition: border-color .2s, background .2s; margin-bottom: 10px; }
 .drop-zone:hover { border-color: #c9a84c; background: rgba(180,140,60,0.07); }
 .drop-zone input { display: none; }
-.drop-icon { font-size: 2rem; margin-bottom: 8px; }
-.drop-text { font-size: .85em; color: rgba(240,235,224,0.5); }
+.drop-icon { font-size: 1.8rem; margin-bottom: 6px; }
+.drop-text { font-size: .82em; color: rgba(240,235,224,0.4); }
 .drop-text strong { color: #c9a84c; }
-
-.file-ok {
-  background: rgba(52,199,89,0.08);
-  border: 0.5px solid rgba(52,199,89,0.3);
-  border-radius: 10px; padding: 10px 14px;
-  font-size: .82em; color: #34c759;
-  display: none; margin-bottom: 10px;
-}
-
-.hint {
-  background: rgba(180,140,60,0.05);
-  border-left: 2px solid rgba(180,140,60,0.4);
-  border-radius: 0 8px 8px 0;
-  padding: 10px 12px;
-  font-size: .78em; color: rgba(240,235,224,0.5); line-height: 1.6;
-}
+.file-ok { background: rgba(52,199,89,0.07); border: 0.5px solid rgba(52,199,89,0.25); border-radius: 10px; padding: 9px 13px; font-size: .8em; color: #34c759; display: none; margin-bottom: 10px; }
+.hint { background: rgba(180,140,60,0.04); border-left: 2px solid rgba(180,140,60,0.35); border-radius: 0 8px 8px 0; padding: 9px 11px; font-size: .76em; color: rgba(240,235,224,0.4); line-height: 1.6; }
 .hint a { color: #c9a84c; text-decoration: none; }
 
-/* ── BUTTONS ── */
-.btn {
-  width: 100%; padding: 13px; font-size: .92em; font-weight: 500;
-  border: none; border-radius: 10px; cursor: pointer;
-  font-family: 'DM Sans', sans-serif; margin-bottom: 8px;
-  transition: opacity .15s, transform .1s;
-}
-.btn:active { transform: scale(.98); opacity: .85; }
-.btn-gold {
-  background: linear-gradient(135deg, #c9a84c, #a8882e);
-  color: #1a1200;
-  box-shadow: 0 4px 20px rgba(180,140,60,0.25);
-}
-.btn-outline {
-  background: transparent;
-  border: 0.5px solid rgba(180,140,60,0.3);
-  color: rgba(240,235,224,0.6);
-}
-.btn-outline:hover { border-color: rgba(180,140,60,0.6); color: #c9a84c; }
+/* BUTTONS */
+.btn { width: 100%; padding: 12px; font-size: .9em; font-weight: 500; border: none; border-radius: 10px; cursor: pointer; font-family: 'DM Sans', sans-serif; margin-bottom: 8px; transition: opacity .15s, transform .1s; }
+.btn:active { transform: scale(.98); opacity: .82; }
+.btn-gold { background: linear-gradient(135deg, #c9a84c, #a8882e); color: #1a1200; box-shadow: 0 4px 18px rgba(180,140,60,0.22); }
+.btn-outline { background: transparent; border: 0.5px solid rgba(180,140,60,0.25); color: rgba(240,235,224,0.55); }
+.btn-outline:hover { border-color: rgba(180,140,60,0.55); color: #c9a84c; }
+.btn-save { background: rgba(52,199,89,0.1); border: 0.5px solid rgba(52,199,89,0.3); color: #34c759; }
+.btn-save:hover { background: rgba(52,199,89,0.18); }
 
-/* ── TABLE TIMESTAMPS ── */
-.ts-wrap {
-  max-height: 300px; overflow-y: auto;
-  border-radius: 10px; border: 0.5px solid rgba(180,140,60,0.1);
-  margin-bottom: 12px;
-}
+/* TABLE */
+.ts-wrap { max-height: 280px; overflow-y: auto; border-radius: 10px; border: 0.5px solid rgba(180,140,60,0.08); margin-bottom: 12px; }
 .ts-wrap::-webkit-scrollbar { width: 3px; }
 .ts-wrap::-webkit-scrollbar-thumb { background: rgba(180,140,60,0.2); border-radius: 3px; }
-table { width: 100%; border-collapse: collapse; font-size: .84em; }
-table th { color: rgba(180,140,60,0.5); font-size: .7em; padding: 6px 8px; text-align: left; border-bottom: 0.5px solid rgba(180,140,60,0.1); font-weight: 400; letter-spacing: .08em; text-transform: uppercase; }
-table td { padding: 4px 8px; border-bottom: 0.5px solid rgba(255,255,255,0.03); }
+table { width: 100%; border-collapse: collapse; font-size: .83em; }
+table th { color: rgba(180,140,60,0.45); font-size: .68em; padding: 6px 8px; text-align: left; border-bottom: 0.5px solid rgba(180,140,60,0.08); font-weight: 400; letter-spacing: .08em; text-transform: uppercase; }
+table td { padding: 3px 8px; border-bottom: 0.5px solid rgba(255,255,255,0.025); }
 table tr:last-child td { border-bottom: none; }
-table input {
-  width: 100%; padding: 5px 8px;
-  background: rgba(255,255,255,0.04);
-  border: 0.5px solid rgba(180,140,60,0.15);
-  border-radius: 6px; color: #f0ebe0;
-  font-family: 'DM Sans', sans-serif; font-size: .88em;
-}
-table input:focus { outline: none; border-color: rgba(180,140,60,0.5); background: rgba(180,140,60,0.06); }
-table input::placeholder { color: rgba(240,235,224,0.2); }
+table input { width: 100%; padding: 5px 7px; background: rgba(255,255,255,0.04); border: 0.5px solid rgba(180,140,60,0.12); border-radius: 6px; color: #f0ebe0; font-family: 'DM Sans', sans-serif; font-size: .86em; }
+table input:focus { outline: none; border-color: rgba(180,140,60,0.45); background: rgba(180,140,60,0.05); }
+table input::placeholder { color: rgba(240,235,224,0.18); }
 
-/* ── PLAYER ── */
+/* TOAST */
+#toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(80px); background: rgba(30,28,20,0.95); border: 0.5px solid rgba(180,140,60,0.3); border-radius: 10px; padding: 10px 20px; font-size: .82em; color: #c9a84c; transition: transform .3s ease; z-index: 99; white-space: nowrap; pointer-events: none; }
+#toast.show { transform: translateX(-50%) translateY(0); }
+
+/* PLAYER */
 #step3 { display: none; }
-.page-big {
-  text-align: center; margin-bottom: 16px;
-}
-.page-num {
-  font-family: 'Amiri', serif;
-  font-size: 4rem; color: #c9a84c; line-height: 1;
-}
-.page-sub { font-size: .78rem; color: rgba(240,235,224,0.4); margin-top: 4px; }
-
-.loop-badge {
-  display: inline-flex; align-items: center; gap: 6px;
-  background: rgba(52,199,89,0.08);
-  border: 0.5px solid rgba(52,199,89,0.25);
-  border-radius: 20px; padding: 4px 14px;
-  font-size: .72rem; color: #34c759; margin-bottom: 14px;
-}
-.loop-dot {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: #34c759;
-  animation: pulse 1.5s ease-in-out infinite;
-}
-@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.25} }
-
-select {
-  width: 100%; padding: 12px 14px; font-size: 15px;
-  border-radius: 10px;
-  border: 0.5px solid rgba(180,140,60,0.2);
-  background: rgba(255,255,255,0.04);
-  color: #f0ebe0; font-family: 'DM Sans', sans-serif;
-  margin-bottom: 14px; appearance: none;
-}
+.page-big { text-align: center; margin-bottom: 14px; }
+.page-num { font-family: 'Amiri', serif; font-size: 3.8rem; color: #c9a84c; line-height: 1; }
+.page-sub { font-size: .75rem; color: rgba(240,235,224,0.35); margin-top: 3px; }
+.loop-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(52,199,89,0.07); border: 0.5px solid rgba(52,199,89,0.22); border-radius: 20px; padding: 3px 13px; font-size: .7rem; color: #34c759; margin-bottom: 12px; }
+.loop-dot { width: 5px; height: 5px; border-radius: 50%; background: #34c759; animation: pulse 1.5s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.2} }
+select { width: 100%; padding: 11px 13px; font-size: 14px; border-radius: 10px; border: 0.5px solid rgba(180,140,60,0.18); background: rgba(255,255,255,0.04); color: #f0ebe0; font-family: 'DM Sans', sans-serif; margin-bottom: 12px; appearance: none; }
 select option { background: #1a1600; color: #f0ebe0; }
-
 audio { display: none; }
-
-.progress-wrap {
-  background: rgba(255,255,255,0.06);
-  border-radius: 6px; height: 5px; cursor: pointer; margin-bottom: 6px;
-}
-.progress-bar {
-  background: linear-gradient(90deg, #c9a84c, #a8882e);
-  border-radius: 6px; height: 100%; width: 0%;
-  transition: width .3s linear;
-}
-.time-row {
-  display: flex; justify-content: space-between;
-  font-size: .72rem; color: rgba(240,235,224,0.35); margin-bottom: 16px;
-}
-
+.progress-wrap { background: rgba(255,255,255,0.06); border-radius: 6px; height: 5px; cursor: pointer; margin-bottom: 5px; }
+.progress-bar { background: linear-gradient(90deg, #c9a84c, #a8882e); border-radius: 6px; height: 100%; width: 0%; transition: width .3s linear; }
+.time-row { display: flex; justify-content: space-between; font-size: .7rem; color: rgba(240,235,224,0.3); margin-bottom: 14px; }
 .controls { display: flex; gap: 8px; margin-bottom: 10px; }
-.ctrl-btn {
-  flex: 1; padding: 12px; font-size: .88em; font-weight: 500;
-  border: none; border-radius: 10px; cursor: pointer;
-  font-family: 'DM Sans', sans-serif; transition: opacity .15s;
-}
+.ctrl-btn { flex: 1; padding: 11px; font-size: .86em; font-weight: 500; border: none; border-radius: 10px; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: opacity .15s; }
 .ctrl-btn:active { opacity: .75; }
-.ctrl-prev { background: rgba(255,255,255,0.07); color: rgba(240,235,224,0.7); }
-.ctrl-play {
-  flex: 1.6;
-  background: linear-gradient(135deg, #c9a84c, #a8882e);
-  color: #1a1200; font-size: 1em;
-  box-shadow: 0 4px 16px rgba(180,140,60,0.2);
-}
-.ctrl-next { background: rgba(255,255,255,0.07); color: rgba(240,235,224,0.7); }
-
-.loop-info { text-align: center; font-size: .75rem; color: rgba(240,235,224,0.3); margin-bottom: 14px; }
+.ctrl-prev { background: rgba(255,255,255,0.06); color: rgba(240,235,224,0.65); }
+.ctrl-play { flex: 1.6; background: linear-gradient(135deg, #c9a84c, #a8882e); color: #1a1200; font-size: .95em; box-shadow: 0 4px 14px rgba(180,140,60,0.18); }
+.ctrl-next { background: rgba(255,255,255,0.06); color: rgba(240,235,224,0.65); }
+.loop-info { text-align: center; font-size: .73rem; color: rgba(240,235,224,0.28); margin-bottom: 12px; }
 .loop-info span { color: #c9a84c; font-weight: 500; }
-
-/* steps hide/show */
-#step1, #step2 { }
 </style>
 </head>
 <body>
 <div class="container">
-
   <header>
     <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
     <div class="surah-name-ar" id="surah-ar">القرآن الكريم</div>
     <div class="surah-name-fr" id="surah-fr">Mémorisation page par page</div>
-    <div class="ornement">
-      <div class="ornement-line"></div>
-      <div class="ornement-diamond"></div>
-      <div class="ornement-line"></div>
-    </div>
+    <div class="ornement"><div class="ornement-line"></div><div class="ornement-diamond"></div><div class="ornement-line"></div></div>
   </header>
 
-  <!-- ══ ÉTAPE 1 ══ -->
-  <div id="step1">
+  <!-- ══ ACCUEIL / BIBLIOTHÈQUE ══ -->
+  <div id="step0">
     <div class="card">
-      <div class="card-title">Importer l'audio</div>
+      <div class="card-title">Ma bibliothèque</div>
+      <div id="lib-list"><div class="lib-empty">Aucune sourate enregistrée</div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Nouvelle sourate</div>
       <div class="drop-zone" id="drop-zone" onclick="document.getElementById('file-input').click()">
         <input type="file" id="file-input" accept="audio/*,video/*">
         <div class="drop-icon">🎵</div>
-        <div class="drop-text"><strong>Appuie ici pour choisir ton fichier</strong><br>MP3, MP4, M4A…</div>
+        <div class="drop-text"><strong>Appuie ici pour importer un audio</strong><br>MP3, MP4, M4A…</div>
       </div>
       <div class="file-ok" id="file-ok">✅ <span id="file-name"></span></div>
-      <div class="hint">
-        💡 Télécharge l'audio depuis <a href="https://yt1s.com" target="_blank">yt1s.com</a> ou via l'app <strong>Documents by Readdle</strong> sur iPhone. Le nom de la sourate sera détecté automatiquement depuis le nom du fichier.
-      </div>
+      <div class="hint">💡 Télécharge l'audio depuis <a href="https://yt1s.com" target="_blank">yt1s.com</a>. Le nom de la sourate est détecté depuis le nom du fichier.</div>
     </div>
-    <button class="btn btn-gold" id="btn-step2" style="display:none" onclick="goStep2()">Continuer →</button>
+    <button class="btn btn-gold" id="btn-step1" style="display:none" onclick="goStep1()">Configurer les timestamps →</button>
   </div>
 
-  <!-- ══ ÉTAPE 2 ══ -->
-  <div id="step2" style="display:none">
+  <!-- ══ ÉTAPE 1 : TIMESTAMPS ══ -->
+  <div id="step1" style="display:none">
     <div class="card">
       <div class="card-title">Timestamps des pages</div>
-      <p style="font-size:.8em;color:rgba(240,235,224,0.4);margin-bottom:12px;line-height:1.6;">
-        Entre le début de chaque page du Mushaf (format <strong style="color:#c9a84c">mm:ss</strong>). Commence par l'estimation puis corrige.
-      </p>
-      <button class="btn btn-outline" onclick="autoFill()" style="margin-bottom:12px;">⚡ Estimation automatique</button>
+      <p style="font-size:.78em;color:rgba(240,235,224,0.35);margin-bottom:10px;line-height:1.6;">Format <strong style="color:#c9a84c">mm:ss</strong> — entre le début de chaque page du Mushaf.</p>
+      <button class="btn btn-outline" onclick="autoFill()" style="margin-bottom:10px;">⚡ Estimation automatique</button>
       <div class="ts-wrap">
         <table>
           <thead><tr><th>Page</th><th>Début</th><th>Durée</th></tr></thead>
           <tbody id="ts-body"></tbody>
         </table>
       </div>
-      <button class="btn btn-gold" onclick="goStep3()">▶ Lancer</button>
-      <button class="btn btn-outline" onclick="goStep1()">← Changer de fichier</button>
+      <button class="btn btn-save" onclick="saveAndLaunch()">💾 Enregistrer et lancer</button>
+      <button class="btn btn-outline" onclick="goStep0()">← Retour</button>
     </div>
   </div>
 
-  <!-- ══ ÉTAPE 3 : PLAYER ══ -->
+  <!-- ══ ÉTAPE 2 : PLAYER ══ -->
   <div id="step3">
     <audio id="audio"></audio>
     <div class="page-big">
       <div class="page-num" id="page-num">1</div>
       <div class="page-sub" id="page-sub">Page 1 du Mushaf</div>
     </div>
-    <div style="text-align:center;margin-bottom:14px;">
-      <span class="loop-badge"><span class="loop-dot"></span>Boucle infinie</span>
-    </div>
-    <div class="card" style="padding:14px 16px;">
+    <div style="text-align:center;margin-bottom:12px;"><span class="loop-badge"><span class="loop-dot"></span>Boucle infinie</span></div>
+    <div class="card" style="padding:14px 15px;">
       <select id="page-select" onchange="goToPage(+this.value)"></select>
-      <div class="progress-wrap" id="prog-wrap">
-        <div class="progress-bar" id="prog-bar"></div>
-      </div>
-      <div class="time-row">
-        <span id="t-cur">0:00</span>
-        <span id="t-end">0:00</span>
-      </div>
+      <div class="progress-wrap" id="prog-wrap"><div class="progress-bar" id="prog-bar"></div></div>
+      <div class="time-row"><span id="t-cur">0:00</span><span id="t-end">0:00</span></div>
       <div class="controls">
         <button class="ctrl-btn ctrl-prev" onclick="prev()">◀◀</button>
         <button class="ctrl-btn ctrl-play" id="btn-play" onclick="togglePlay()">⏸</button>
@@ -315,113 +178,165 @@ audio { display: none; }
       </div>
       <div class="loop-info">Boucles : <span id="lc">1</span></div>
     </div>
-    <button class="btn btn-outline" onclick="goStep2()" style="margin-top:6px;">✏️ Modifier les timestamps</button>
+    <button class="btn btn-save" onclick="saveCurrentTimestamps()" style="margin-top:4px;">💾 Sauvegarder les timestamps</button>
+    <button class="btn btn-outline" onclick="goStep1()">✏️ Modifier les timestamps</button>
+    <button class="btn btn-outline" onclick="goStep0()">← Bibliothèque</button>
   </div>
-
 </div>
 
+<div id="toast"></div>
+
 <script>
-// ── Données sourates ──
+// ══ DONNÉES SOURATES ══
 const SOURATES = [
-  { num:1,  ar:'سورة الفاتحة',   fr:'Al-Fâtiha — L\'Ouverture',    pages:1  },
-  { num:2,  ar:'سورة البقرة',    fr:'Al-Baqarah — La Vache',        pages:48 },
-  { num:3,  ar:'سورة آل عمران', fr:'Âl-\'Imrân — La Famille d\'Imrân', pages:20 },
-  { num:4,  ar:'سورة النساء',    fr:'An-Nisâ — Les Femmes',          pages:24 },
-  { num:5,  ar:'سورة المائدة',   fr:'Al-Mâ\'ida — La Table Servie',  pages:16 },
-  { num:6,  ar:'سورة الأنعام',   fr:'Al-An\'âm — Les Bestiaux',      pages:21 },
-  { num:7,  ar:'سورة الأعراف',   fr:'Al-A\'râf — Les Murailles',     pages:24 },
-  { num:8,  ar:'سورة الأنفال',   fr:'Al-Anfâl — Le Butin',           pages:9  },
-  { num:9,  ar:'سورة التوبة',    fr:'At-Tawba — Le Repentir',        pages:16 },
-  { num:10, ar:'سورة يونس',      fr:'Yûnus — Jonas',                  pages:11 },
-  { num:11, ar:'سورة هود',       fr:'Hûd',                            pages:11 },
-  { num:12, ar:'سورة يوسف',      fr:'Yûsuf — Joseph',                 pages:11 },
-  { num:13, ar:'سورة الرعد',     fr:'Ar-Ra\'d — Le Tonnerre',         pages:6  },
-  { num:14, ar:'سورة إبراهيم',   fr:'Ibrâhîm — Abraham',              pages:7  },
-  { num:15, ar:'سورة الحجر',     fr:'Al-Hijr',                        pages:6  },
-  { num:16, ar:'سورة النحل',     fr:'An-Nahl — Les Abeilles',         pages:13 },
-  { num:17, ar:'سورة الإسراء',   fr:'Al-Isrâ — Le Voyage Nocturne',  pages:12 },
-  { num:18, ar:'سورة الكهف',     fr:'Al-Kahf — La Caverne',           pages:12 },
-  { num:19, ar:'سورة مريم',      fr:'Maryam — Marie',                 pages:6  },
-  { num:20, ar:'سورة طه',        fr:'Tâ-Hâ',                          pages:8  },
-  { num:21, ar:'سورة الأنبياء',  fr:'Al-Anbiyâ — Les Prophètes',     pages:8  },
-  { num:22, ar:'سورة الحج',      fr:'Al-Hajj — Le Pèlerinage',        pages:10 },
-  { num:23, ar:'سورة المؤمنون',  fr:'Al-Mu\'minûn — Les Croyants',   pages:7  },
-  { num:24, ar:'سورة النور',     fr:'An-Nûr — La Lumière',            pages:9  },
-  { num:25, ar:'سورة الفرقان',   fr:'Al-Furqân — Le Discernement',   pages:7  },
-  { num:26, ar:'سورة الشعراء',   fr:'Ash-Shu\'arâ — Les Poètes',     pages:11 },
-  { num:27, ar:'سورة النمل',     fr:'An-Naml — Les Fourmis',          pages:9  },
-  { num:28, ar:'سورة القصص',     fr:'Al-Qasas — Le Récit',            pages:10 },
-  { num:29, ar:'سورة العنكبوت',  fr:'Al-\'Ankabût — L\'Araignée',    pages:7  },
-  { num:30, ar:'سورة الروم',     fr:'Ar-Rûm — Les Byzantins',         pages:6  },
-  { num:114,ar:'سورة الناس',     fr:'An-Nâs — Les Hommes',            pages:1  },
+  {num:1, ar:'سورة الفاتحة', fr:'Al-Fâtiha — L\'Ouverture', pages:1},
+  {num:2, ar:'سورة البقرة', fr:'Al-Baqarah — La Vache', pages:48},
+  {num:3, ar:'سورة آل عمران', fr:'Âl-\'Imrân — La Famille d\'Imrân', pages:20},
+  {num:4, ar:'سورة النساء', fr:'An-Nisâ — Les Femmes', pages:24},
+  {num:5, ar:'سورة المائدة', fr:'Al-Mâ\'ida — La Table Servie', pages:16},
+  {num:6, ar:'سورة الأنعام', fr:'Al-An\'âm — Les Bestiaux', pages:21},
+  {num:7, ar:'سورة الأعراف', fr:'Al-A\'râf — Les Murailles', pages:24},
+  {num:8, ar:'سورة الأنفال', fr:'Al-Anfâl — Le Butin', pages:9},
+  {num:9, ar:'سورة التوبة', fr:'At-Tawba — Le Repentir', pages:16},
+  {num:10, ar:'سورة يونس', fr:'Yûnus — Jonas', pages:11},
+  {num:11, ar:'سورة هود', fr:'Hûd', pages:11},
+  {num:12, ar:'سورة يوسف', fr:'Yûsuf — Joseph', pages:11},
+  {num:13, ar:'سورة الرعد', fr:'Ar-Ra\'d — Le Tonnerre', pages:6},
+  {num:14, ar:'سورة إبراهيم', fr:'Ibrâhîm — Abraham', pages:7},
+  {num:15, ar:'سورة الحجر', fr:'Al-Hijr', pages:6},
+  {num:16, ar:'سورة النحل', fr:'An-Nahl — Les Abeilles', pages:13},
+  {num:17, ar:'سورة الإسراء', fr:'Al-Isrâ — Le Voyage Nocturne', pages:12},
+  {num:18, ar:'سورة الكهف', fr:'Al-Kahf — La Caverne', pages:12},
+  {num:19, ar:'سورة مريم', fr:'Maryam — Marie', pages:6},
+  {num:20, ar:'سورة طه', fr:'Tâ-Hâ', pages:8},
+  {num:21, ar:'سورة الأنبياء', fr:'Al-Anbiyâ — Les Prophètes', pages:8},
+  {num:22, ar:'سورة الحج', fr:'Al-Hajj — Le Pèlerinage', pages:10},
+  {num:23, ar:'سورة المؤمنون', fr:'Al-Mu\'minûn — Les Croyants', pages:7},
+  {num:24, ar:'سورة النور', fr:'An-Nûr — La Lumière', pages:9},
+  {num:25, ar:'سورة الفرقان', fr:'Al-Furqân — Le Discernement', pages:7},
+  {num:26, ar:'سورة الشعراء', fr:'Ash-Shu\'arâ — Les Poètes', pages:11},
+  {num:27, ar:'سورة النمل', fr:'An-Naml — Les Fourmis', pages:9},
+  {num:28, ar:'سورة القصص', fr:'Al-Qasas — Le Récit', pages:10},
+  {num:29, ar:'سورة العنكبوت', fr:'Al-\'Ankabût — L\'Araignée', pages:7},
+  {num:30, ar:'سورة الروم', fr:'Ar-Rûm — Les Byzantins', pages:6},
+  {num:36, ar:'سورة يس', fr:'Yâ-Sîn', pages:4},
+  {num:55, ar:'سورة الرحمن', fr:'Ar-Rahmân — Le Tout Miséricordieux', pages:3},
+  {num:67, ar:'سورة الملك', fr:'Al-Mulk — La Royauté', pages:2},
+  {num:112, ar:'سورة الإخلاص', fr:'Al-Ikhlâs — Le Monothéisme Pur', pages:1},
+  {num:113, ar:'سورة الفلق', fr:'Al-Falaq — L\'Aube', pages:1},
+  {num:114, ar:'سورة الناس', fr:'An-Nâs — Les Hommes', pages:1},
 ];
 
-const PAGE_COUNT_DEFAULT = 48;
+// ══ STATE ══
 let audioURL = null;
+let audioBlob = null;
 let pages = [];
-let pageCount = PAGE_COUNT_DEFAULT;
+let pageCount = 48;
 let cur = 0, loopCount = 1;
+let currentSurahKey = null; // clé de sauvegarde
 let detectedSurah = null;
+let currentFileName = '';
 
-// ── Détection sourate depuis nom de fichier ──
+// ══ BIBLIOTHÈQUE (localStorage) ══
+function getLib() {
+  try { return JSON.parse(localStorage.getItem('quran_lib') || '{}'); } catch(e) { return {}; }
+}
+function saveLib(lib) { localStorage.setItem('quran_lib', JSON.stringify(lib)); }
+
+function renderLib() {
+  const lib = getLib();
+  const keys = Object.keys(lib);
+  const container = document.getElementById('lib-list');
+  if (keys.length === 0) {
+    container.innerHTML = '<div class="lib-empty">Aucune sourate enregistrée</div>';
+    return;
+  }
+  container.innerHTML = '';
+  keys.forEach(key => {
+    const entry = lib[key];
+    const div = document.createElement('div');
+    div.className = 'lib-item';
+    div.innerHTML = `
+      <div class="lib-item-left">
+        <div class="lib-item-ar">${entry.ar}</div>
+        <div class="lib-item-fr">${entry.fr}</div>
+        <div class="lib-item-meta">${entry.pages.length} pages · sauvegardé le ${entry.savedAt}</div>
+      </div>
+      <div class="lib-item-right">
+        <button class="lib-open" onclick="openFromLib('${key}')">▶ Ouvrir</button>
+        <button class="lib-del" onclick="deleteFromLib('${key}')">✕</button>
+      </div>`;
+    container.appendChild(div);
+  });
+}
+
+function openFromLib(key) {
+  const lib = getLib();
+  const entry = lib[key];
+  if (!entry) return;
+  // besoin d'un nouveau fichier audio
+  currentSurahKey = key;
+  detectedSurah = SOURATES.find(s => s.num === entry.surahNum) || null;
+  pageCount = entry.pages.length;
+  pages = entry.pages;
+  updateHeader(detectedSurah, entry.ar, entry.fr);
+  // demander le fichier audio
+  promptAudioForLib(key, entry);
+}
+
+function promptAudioForLib(key, entry) {
+  // on montre step0 avec message spécial
+  show('step0'); hide('step1'); hide('step3');
+  document.getElementById('drop-zone').style.display = 'block';
+  document.getElementById('file-ok').style.display = 'none';
+  document.getElementById('btn-step1').style.display = 'none';
+  // message
+  toast('📂 Importe le fichier audio de ' + entry.ar + ' pour reprendre');
+  // quand le fichier arrive → lancer directement
+  pendingLibKey = key;
+}
+
+let pendingLibKey = null;
+
+function deleteFromLib(key) {
+  if (!confirm('Supprimer cette sourate de la bibliothèque ?')) return;
+  const lib = getLib();
+  delete lib[key];
+  saveLib(lib);
+  renderLib();
+  toast('Supprimé');
+}
+
+// ══ DÉTECTION SOURATE ══
 function detectSurah(filename) {
   const name = filename.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
   const keywords = {
-    1:  ['fatiha','fateha','ouverture'],
-    2:  ['baqarah','baqara','vache'],
-    3:  ['imran','omran'],
-    4:  ['nisa','nisaa','femmes'],
-    5:  ['maida','table'],
-    6:  ['anam','anaam','bestiaux'],
-    7:  ['araf','araaf'],
-    8:  ['anfal','butin'],
-    9:  ['tawba','tawbah','repentir','tawbat'],
-    10: ['yunus','younes','jonas'],
-    11: ['hud','hood'],
-    12: ['yusuf','yousouf','joseph'],
-    13: ['rad','raad','tonnerre'],
-    14: ['ibrahim','brahim','abraham'],
-    15: ['hijr','hidjr'],
-    16: ['nahl','abeilles'],
-    17: ['isra','israa','voyage'],
-    18: ['kahf','cave','caverne'],
-    19: ['maryam','mariam','marie'],
-    20: ['taha','ta-ha'],
-    21: ['anbiya','prophetes'],
-    22: ['hajj','pelerinage'],
-    23: ['muminun','croyants'],
-    24: ['nur','nour','lumiere'],
-    25: ['furqan','discernement'],
-    26: ['shuara','poetes'],
-    27: ['naml','fourmis'],
-    28: ['qasas','recit'],
-    29: ['ankabut','araignee'],
-    30: ['rum','ruum','byzantins'],
-    114:['nas','naas','hommes'],
+    1:['fatiha','fateha','ouverture'],2:['baqarah','baqara','vache'],
+    3:['imran','omran'],4:['nisa','nisaa','femmes'],5:['maida','table'],
+    6:['anam','anaam'],7:['araf'],8:['anfal'],9:['tawba','repentir'],
+    10:['yunus','younes'],11:['hud'],12:['yusuf','yousouf'],
+    13:['rad','raad'],14:['ibrahim'],15:['hijr'],16:['nahl'],
+    17:['isra'],18:['kahf'],19:['maryam','mariam'],20:['taha'],
+    21:['anbiya'],22:['hajj'],23:['muminun'],24:['nour','nur'],
+    25:['furqan'],26:['shuara'],27:['naml'],28:['qasas'],
+    29:['ankabut'],30:['rum'],36:['yasin','ya-sin','yassine'],
+    55:['rahman'],67:['mulk'],112:['ikhlas'],113:['falaq'],114:['nas'],
   };
   for (const [num, kws] of Object.entries(keywords)) {
-    if (kws.some(k => name.includes(k))) {
-      return SOURATES.find(s => s.num === +num) || null;
-    }
+    if (kws.some(k => name.includes(k))) return SOURATES.find(s => s.num === +num) || null;
   }
   return null;
 }
 
-function updateHeader(surah) {
-  if (surah) {
-    document.getElementById('surah-ar').textContent = surah.ar;
-    document.getElementById('surah-fr').textContent = surah.fr;
-    pageCount = surah.pages;
-  } else {
-    document.getElementById('surah-ar').textContent = 'القرآن الكريم';
-    document.getElementById('surah-fr').textContent = 'Mémorisation page par page';
-    pageCount = PAGE_COUNT_DEFAULT;
-  }
+function updateHeader(surah, arOverride, frOverride) {
+  document.getElementById('surah-ar').textContent = arOverride || (surah ? surah.ar : 'القرآن الكريم');
+  document.getElementById('surah-fr').textContent = frOverride || (surah ? surah.fr : 'Mémorisation page par page');
+  if (surah) pageCount = surah.pages;
 }
 
-// ── Import fichier ──
+// ══ IMPORT FICHIER ══
 const fileInput = document.getElementById('file-input');
-const dropZone  = document.getElementById('drop-zone');
+const dropZone = document.getElementById('drop-zone');
 fileInput.addEventListener('change', e => loadFile(e.target.files[0]));
 dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('over'); });
 dropZone.addEventListener('dragleave', () => dropZone.classList.remove('over'));
@@ -431,40 +346,108 @@ function loadFile(file) {
   if (!file) return;
   if (audioURL) URL.revokeObjectURL(audioURL);
   audioURL = URL.createObjectURL(file);
+  currentFileName = file.name;
   document.getElementById('file-name').textContent = file.name;
   document.getElementById('file-ok').style.display = 'block';
-  document.getElementById('btn-step2').style.display = 'block';
-  dropZone.style.display = 'none';
+
   detectedSurah = detectSurah(file.name);
   updateHeader(detectedSurah);
-}
 
-// ── Navigation ──
-function goStep1() { show('step1'); hide('step2'); hide('step3'); }
-function goStep2() {
-  if (!audioURL) { alert('Importe d\'abord un fichier audio.'); return; }
-  show('step2'); hide('step1'); hide('step3');
-  buildTable();
-  const saved = localStorage.getItem('bq_ts_v2');
-  if (saved) {
-    try {
-      const arr = JSON.parse(saved);
-      if (arr.length === pageCount) {
-        arr.forEach((s,i) => { const el = document.getElementById('t'+(i+1)); if(el) el.value = fmt(s); });
-        updatePreviews();
-      }
-    } catch(e) {}
+  // si on attendait ce fichier pour une entrée de bibliothèque
+  if (pendingLibKey) {
+    const lib = getLib();
+    const entry = lib[pendingLibKey];
+    if (entry) {
+      pages = entry.pages;
+      pageCount = pages.length;
+      currentSurahKey = pendingLibKey;
+      pendingLibKey = null;
+      launchPlayer();
+      return;
+    }
+  }
+
+  // sinon → vérifier si déjà dans la lib
+  const key = makeSurahKey(file.name, detectedSurah);
+  currentSurahKey = key;
+  const lib = getLib();
+  if (lib[key]) {
+    // timestamps déjà sauvegardés → proposer de reprendre
+    pages = lib[key].pages;
+    pageCount = pages.length;
+    document.getElementById('btn-step1').style.display = 'block';
+    document.getElementById('btn-step1').textContent = '▶ Reprendre (timestamps sauvegardés)';
+    toast('✅ Timestamps retrouvés — appuie sur Reprendre !');
+  } else {
+    document.getElementById('btn-step1').style.display = 'block';
+    document.getElementById('btn-step1').textContent = 'Configurer les timestamps →';
   }
 }
-function goStep3() {
+
+function makeSurahKey(filename, surah) {
+  if (surah) return 'surah_' + surah.num;
+  return 'file_' + filename.replace(/[^a-z0-9]/gi,'').toLowerCase().slice(0,20);
+}
+
+// ══ NAVIGATION ══
+function goStep0() {
+  show('step0'); hide('step1'); hide('step3');
+  renderLib();
+  updateHeader(null);
+}
+function goStep1() {
+  if (!audioURL) { toast('⚠ Importe d\'abord un fichier audio'); return; }
+  show('step1'); hide('step0'); hide('step3');
+  buildTable();
+  // pré-remplir si timestamps dispo
+  if (pages.length === pageCount) {
+    pages.forEach((s,i) => { const el = document.getElementById('t'+(i+1)); if(el) el.value = fmt(s); });
+    updatePreviews();
+  } else {
+    const lib = getLib();
+    const saved = lib[currentSurahKey];
+    if (saved && saved.pages.length) {
+      saved.pages.forEach((s,i) => { const el = document.getElementById('t'+(i+1)); if(el) el.value = fmt(s); });
+      updatePreviews();
+    }
+  }
+}
+
+function goStep0btn() { goStep0(); }
+
+function saveAndLaunch() {
   pages = [];
   for (let i = 1; i <= pageCount; i++) {
     const t = parse(document.getElementById('t'+i)?.value);
-    if (t === null) { alert('Timestamp manquant page ' + i); return; }
+    if (t === null) { toast('⚠ Timestamp manquant page '+i); return; }
     pages.push(t);
   }
-  localStorage.setItem('bq_ts_v2', JSON.stringify(pages));
-  show('step3'); hide('step1'); hide('step2');
+  saveCurrentTimestamps();
+  launchPlayer();
+}
+
+function saveCurrentTimestamps() {
+  if (!pages.length) return;
+  const lib = getLib();
+  const surah = detectedSurah;
+  const key = currentSurahKey || makeSurahKey(currentFileName, surah);
+  currentSurahKey = key;
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('fr-FR');
+  lib[key] = {
+    ar: surah ? surah.ar : currentFileName,
+    fr: surah ? surah.fr : currentFileName,
+    surahNum: surah ? surah.num : 0,
+    pages: pages,
+    savedAt: dateStr,
+    fileName: currentFileName,
+  };
+  saveLib(lib);
+  toast('💾 Timestamps sauvegardés !');
+}
+
+function launchPlayer() {
+  show('step3'); hide('step0'); hide('step1');
   buildSelect();
   const audio = document.getElementById('audio');
   audio.src = audioURL;
@@ -472,15 +455,15 @@ function goStep3() {
   goToPage(0);
 }
 
-// ── Table ──
+// ══ TABLE TIMESTAMPS ══
 function buildTable() {
   const tbody = document.getElementById('ts-body');
   tbody.innerHTML = '';
   for (let i = 1; i <= pageCount; i++) {
     const tr = document.createElement('tr');
-    tr.innerHTML = `<td style="font-weight:500;color:rgba(240,235,224,.8);white-space:nowrap">${i}</td>
+    tr.innerHTML = `<td style="font-weight:500;color:rgba(240,235,224,.75);white-space:nowrap">${i}</td>
       <td><input type="text" id="t${i}" placeholder="0:00" oninput="updatePreviews()"></td>
-      <td style="color:rgba(180,140,60,.5);font-size:.76em;white-space:nowrap" id="dur${i}">—</td>`;
+      <td style="color:rgba(180,140,60,.45);font-size:.74em;white-space:nowrap" id="dur${i}">—</td>`;
     tbody.appendChild(tr);
   }
 }
@@ -496,10 +479,7 @@ function autoFill() {
     updatePreviews();
   };
   if (audio.duration && !isNaN(audio.duration)) fill(audio.duration);
-  else {
-    audio.onloadedmetadata = () => fill(audio.duration);
-    setTimeout(() => { if (!audio.duration || isNaN(audio.duration)) fill(8700); }, 1500);
-  }
+  else { audio.onloadedmetadata = () => fill(audio.duration); setTimeout(() => { if (!audio.duration || isNaN(audio.duration)) fill(8700); }, 1500); }
 }
 
 function updatePreviews() {
@@ -513,7 +493,7 @@ function updatePreviews() {
   }
 }
 
-// ── Select ──
+// ══ SELECT ══
 function buildSelect() {
   const sel = document.getElementById('page-select');
   sel.innerHTML = '';
@@ -525,7 +505,7 @@ function buildSelect() {
   });
 }
 
-// ── Player ──
+// ══ PLAYER ══
 function getEnd(i) {
   if (pages[i+1] !== undefined) return pages[i+1];
   const audio = document.getElementById('audio');
@@ -554,9 +534,7 @@ function onTimeUpdate() {
   if (t >= getEnd(cur)) {
     loopCount++;
     document.getElementById('lc').textContent = loopCount;
-    audio.currentTime = pages[cur];
-    audio.play();
-    return;
+    audio.currentTime = pages[cur]; audio.play(); return;
   }
   const elapsed = t - pages[cur];
   const total = getEnd(cur) - pages[cur];
@@ -579,7 +557,17 @@ document.getElementById('prog-wrap').addEventListener('click', e => {
 function prev() { if (cur > 0) goToPage(cur-1); }
 function next() { if (cur < pages.length-1) goToPage(cur+1); }
 
-// ── Utils ──
+// ══ TOAST ══
+let toastTimer;
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2800);
+}
+
+// ══ UTILS ══
 function fmt(s) {
   if (s == null || isNaN(s)) return '?';
   s = Math.round(s);
@@ -597,6 +585,9 @@ function parse(str) {
 }
 function show(id) { document.getElementById(id).style.display='block'; }
 function hide(id) { document.getElementById(id).style.display='none'; }
+
+// ══ INIT ══
+renderLib();
 </script>
 </body>
 </html>
