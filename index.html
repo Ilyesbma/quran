@@ -2,592 +2,204 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <title>Mémorisation du Coran</title>
-<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  font-family: 'DM Sans', -apple-system, sans-serif;
-  background: #0e0c08; min-height: 100vh; color: #f0ebe0;
-  background-image: radial-gradient(ellipse 80% 40% at 50% 0%, rgba(180,140,60,0.08) 0%, transparent 70%);
-}
-body::before {
-  content: ''; position: fixed; inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M30 0 L60 30 L30 60 L0 30Z' fill='none' stroke='rgba(180,140,60,0.06)' stroke-width='0.5'/%3E%3Ccircle cx='30' cy='30' r='12' fill='none' stroke='rgba(180,140,60,0.04)' stroke-width='0.5'/%3E%3C/svg%3E");
-  pointer-events: none; z-index: 0;
-}
-.container { max-width: 480px; margin: 0 auto; padding: 0 16px 60px; position: relative; z-index: 1; }
-
-/* HEADER */
-header { text-align: center; padding: 32px 0 20px; border-bottom: 0.5px solid rgba(180,140,60,0.2); margin-bottom: 20px; }
-.bismillah { font-family: 'Amiri', serif; font-size: 1.3rem; color: rgba(180,140,60,0.5); margin-bottom: 8px; }
-.surah-name-ar { font-family: 'Amiri', serif; font-size: clamp(1.8rem,7vw,2.8rem); color: #c9a84c; line-height: 1.1; min-height: 3rem; display: flex; align-items: center; justify-content: center; transition: all .4s ease; }
-.surah-name-fr { font-size: .78rem; font-weight: 300; color: rgba(180,140,60,0.45); letter-spacing: .14em; text-transform: uppercase; margin-top: 5px; min-height: 1.1em; transition: all .3s ease; }
-.ornement { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 12px; }
-.ornement-line { flex: 1; height: 0.5px; background: linear-gradient(90deg, transparent, rgba(180,140,60,0.3), transparent); }
-.ornement-diamond { width: 6px; height: 6px; background: rgba(180,140,60,0.4); transform: rotate(45deg); }
-
-/* CARDS */
-.card { background: rgba(255,255,255,0.03); border: 0.5px solid rgba(180,140,60,0.15); border-radius: 16px; padding: 18px; margin-bottom: 12px; }
-.card-title { font-size: .68rem; font-weight: 500; color: rgba(180,140,60,0.55); letter-spacing: .12em; text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
-.card-title::before, .card-title::after { content: '◆'; font-size: .4rem; opacity: .5; }
-
-/* BIBLIOTHÈQUE */
-.lib-empty { text-align: center; padding: 24px 0; color: rgba(240,235,224,0.25); font-size: .82em; }
-.lib-item {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 10px 12px; border-radius: 10px;
-  border: 0.5px solid rgba(180,140,60,0.12);
-  background: rgba(180,140,60,0.04);
-  margin-bottom: 8px; cursor: pointer;
-  transition: background .2s, border-color .2s;
-}
-.lib-item:hover { background: rgba(180,140,60,0.09); border-color: rgba(180,140,60,0.3); }
-.lib-item-left { display: flex; flex-direction: column; gap: 2px; }
-.lib-item-ar { font-family: 'Amiri', serif; font-size: 1.1rem; color: #c9a84c; }
-.lib-item-fr { font-size: .72rem; color: rgba(240,235,224,0.35); }
-.lib-item-meta { font-size: .68rem; color: rgba(180,140,60,0.4); margin-top: 2px; }
-.lib-item-right { display: flex; align-items: center; gap: 8px; }
-.lib-open { background: rgba(180,140,60,0.15); border: none; border-radius: 7px; padding: 6px 12px; color: #c9a84c; font-size: .75rem; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background .2s; }
-.lib-open:hover { background: rgba(180,140,60,0.28); }
-.lib-del { background: rgba(255,80,80,0.08); border: none; border-radius: 7px; padding: 6px 8px; color: rgba(255,100,100,0.5); font-size: .75rem; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background .2s; }
-.lib-del:hover { background: rgba(255,80,80,0.2); color: #ff6060; }
-
-/* DROP ZONE */
-.drop-zone { border: 1.5px dashed rgba(180,140,60,0.25); border-radius: 12px; padding: 26px 16px; text-align: center; cursor: pointer; background: rgba(180,140,60,0.02); transition: border-color .2s, background .2s; margin-bottom: 10px; }
-.drop-zone:hover { border-color: #c9a84c; background: rgba(180,140,60,0.07); }
-.drop-zone input { display: none; }
-.drop-icon { font-size: 1.8rem; margin-bottom: 6px; }
-.drop-text { font-size: .82em; color: rgba(240,235,224,0.4); }
-.drop-text strong { color: #c9a84c; }
-.file-ok { background: rgba(52,199,89,0.07); border: 0.5px solid rgba(52,199,89,0.25); border-radius: 10px; padding: 9px 13px; font-size: .8em; color: #34c759; display: none; margin-bottom: 10px; }
-.hint { background: rgba(180,140,60,0.04); border-left: 2px solid rgba(180,140,60,0.35); border-radius: 0 8px 8px 0; padding: 9px 11px; font-size: .76em; color: rgba(240,235,224,0.4); line-height: 1.6; }
-.hint a { color: #c9a84c; text-decoration: none; }
-
-/* BUTTONS */
-.btn { width: 100%; padding: 12px; font-size: .9em; font-weight: 500; border: none; border-radius: 10px; cursor: pointer; font-family: 'DM Sans', sans-serif; margin-bottom: 8px; transition: opacity .15s, transform .1s; }
-.btn:active { transform: scale(.98); opacity: .82; }
-.btn-gold { background: linear-gradient(135deg, #c9a84c, #a8882e); color: #1a1200; box-shadow: 0 4px 18px rgba(180,140,60,0.22); }
-.btn-outline { background: transparent; border: 0.5px solid rgba(180,140,60,0.25); color: rgba(240,235,224,0.55); }
-.btn-outline:hover { border-color: rgba(180,140,60,0.55); color: #c9a84c; }
-.btn-save { background: rgba(52,199,89,0.1); border: 0.5px solid rgba(52,199,89,0.3); color: #34c759; }
-.btn-save:hover { background: rgba(52,199,89,0.18); }
-
-/* TABLE */
-.ts-wrap { max-height: 280px; overflow-y: auto; border-radius: 10px; border: 0.5px solid rgba(180,140,60,0.08); margin-bottom: 12px; }
-.ts-wrap::-webkit-scrollbar { width: 3px; }
-.ts-wrap::-webkit-scrollbar-thumb { background: rgba(180,140,60,0.2); border-radius: 3px; }
-table { width: 100%; border-collapse: collapse; font-size: .83em; }
-table th { color: rgba(180,140,60,0.45); font-size: .68em; padding: 6px 8px; text-align: left; border-bottom: 0.5px solid rgba(180,140,60,0.08); font-weight: 400; letter-spacing: .08em; text-transform: uppercase; }
-table td { padding: 3px 8px; border-bottom: 0.5px solid rgba(255,255,255,0.025); }
-table tr:last-child td { border-bottom: none; }
-table input { width: 100%; padding: 5px 7px; background: rgba(255,255,255,0.04); border: 0.5px solid rgba(180,140,60,0.12); border-radius: 6px; color: #f0ebe0; font-family: 'DM Sans', sans-serif; font-size: .86em; }
-table input:focus { outline: none; border-color: rgba(180,140,60,0.45); background: rgba(180,140,60,0.05); }
-table input::placeholder { color: rgba(240,235,224,0.18); }
-
-/* TOAST */
-#toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(80px); background: rgba(30,28,20,0.95); border: 0.5px solid rgba(180,140,60,0.3); border-radius: 10px; padding: 10px 20px; font-size: .82em; color: #c9a84c; transition: transform .3s ease; z-index: 99; white-space: nowrap; pointer-events: none; }
-#toast.show { transform: translateX(-50%) translateY(0); }
-
-/* PLAYER */
-#step3 { display: none; }
-.page-big { text-align: center; margin-bottom: 14px; }
-.page-num { font-family: 'Amiri', serif; font-size: 3.8rem; color: #c9a84c; line-height: 1; }
-.page-sub { font-size: .75rem; color: rgba(240,235,224,0.35); margin-top: 3px; }
-.loop-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(52,199,89,0.07); border: 0.5px solid rgba(52,199,89,0.22); border-radius: 20px; padding: 3px 13px; font-size: .7rem; color: #34c759; margin-bottom: 12px; }
-.loop-dot { width: 5px; height: 5px; border-radius: 50%; background: #34c759; animation: pulse 1.5s ease-in-out infinite; }
-@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.2} }
-select { width: 100%; padding: 11px 13px; font-size: 14px; border-radius: 10px; border: 0.5px solid rgba(180,140,60,0.18); background: rgba(255,255,255,0.04); color: #f0ebe0; font-family: 'DM Sans', sans-serif; margin-bottom: 12px; appearance: none; }
-select option { background: #1a1600; color: #f0ebe0; }
-audio { display: none; }
-.progress-wrap { background: rgba(255,255,255,0.06); border-radius: 6px; height: 5px; cursor: pointer; margin-bottom: 5px; }
-.progress-bar { background: linear-gradient(90deg, #c9a84c, #a8882e); border-radius: 6px; height: 100%; width: 0%; transition: width .3s linear; }
-.time-row { display: flex; justify-content: space-between; font-size: .7rem; color: rgba(240,235,224,0.3); margin-bottom: 14px; }
-.controls { display: flex; gap: 8px; margin-bottom: 10px; }
-.ctrl-btn { flex: 1; padding: 11px; font-size: .86em; font-weight: 500; border: none; border-radius: 10px; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: opacity .15s; }
-.ctrl-btn:active { opacity: .75; }
-.ctrl-prev { background: rgba(255,255,255,0.06); color: rgba(240,235,224,0.65); }
-.ctrl-play { flex: 1.6; background: linear-gradient(135deg, #c9a84c, #a8882e); color: #1a1200; font-size: .95em; box-shadow: 0 4px 14px rgba(180,140,60,0.18); }
-.ctrl-next { background: rgba(255,255,255,0.06); color: rgba(240,235,224,0.65); }
-.loop-info { text-align: center; font-size: .73rem; color: rgba(240,235,224,0.28); margin-bottom: 12px; }
-.loop-info span { color: #c9a84c; font-weight: 500; }
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:#0e0c08;color:#f0ebe0;min-height:100vh;background-image:radial-gradient(ellipse 80% 40% at 50% 0%,rgba(180,140,60,.08),transparent 70%)}
+body:before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M30 0 L60 30 L30 60 L0 30Z' fill='none' stroke='rgba(180,140,60,0.06)' stroke-width='0.5'/%3E%3Ccircle cx='30' cy='30' r='12' fill='none' stroke='rgba(180,140,60,0.04)' stroke-width='0.5'/%3E%3C/svg%3E");pointer-events:none;z-index:0}
+.container{max-width:520px;margin:0 auto;padding:0 16px 60px;position:relative;z-index:1}
+header{text-align:center;padding:30px 0 18px;border-bottom:.5px solid rgba(180,140,60,.2);margin-bottom:18px}
+.bismillah{font-family:'Amiri',serif;font-size:1.28rem;color:rgba(180,140,60,.5);margin-bottom:8px}
+.surah-name-ar{font-family:'Amiri',serif;font-size:clamp(1.8rem,7vw,2.8rem);color:#c9a84c;line-height:1.1;min-height:3rem;display:flex;align-items:center;justify-content:center}
+.surah-name-fr{font-size:.78rem;font-weight:300;color:rgba(180,140,60,.45);letter-spacing:.14em;text-transform:uppercase;margin-top:5px}
+.ornement{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:12px}
+.ornement-line{flex:1;height:.5px;background:linear-gradient(90deg,transparent,rgba(180,140,60,.3),transparent)}
+.ornement-diamond{width:6px;height:6px;background:rgba(180,140,60,.4);transform:rotate(45deg)}
+.card{background:rgba(255,255,255,.03);border:.5px solid rgba(180,140,60,.15);border-radius:16px;padding:18px;margin-bottom:12px}
+.card-title{font-size:.68rem;font-weight:600;color:rgba(180,140,60,.58);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.card-title:before,.card-title:after{content:'◆';font-size:.4rem;opacity:.5}
+.profile-hello{font-size:1.02rem;color:#f0ebe0;margin-bottom:5px;font-weight:600}
+.note,.profile-sub{font-size:.76rem;color:rgba(240,235,224,.38);line-height:1.55;margin-bottom:12px}
+.mini-grid,.surah-dashboard{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.surah-dashboard{grid-template-columns:repeat(2,1fr)}
+.stat,.surah-mini{background:rgba(180,140,60,.04);border:.5px solid rgba(180,140,60,.12);border-radius:12px;padding:10px 8px;text-align:center}
+.stat strong,.surah-mini strong{display:block;color:#c9a84c;font-size:1.05rem}
+.stat span,.surah-mini span{display:block;font-size:.62rem;color:rgba(240,235,224,.35);margin-top:2px}
+.progress-track{width:100%;height:8px;background:rgba(255,255,255,.06);border-radius:999px;overflow:hidden;margin:8px 0 5px}
+.progress-fill{height:100%;width:0;background:linear-gradient(90deg,#c9a84c,#a8882e);border-radius:999px}
+.progress-text{font-size:.68rem;color:rgba(240,235,224,.35);display:flex;justify-content:space-between}
+.badges,.bookmark-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.badge,.bookmark{border:.5px solid rgba(180,140,60,.18);background:rgba(201,168,76,.07);color:rgba(240,235,224,.55);border-radius:999px;padding:6px 10px;font-size:.68rem}
+.badge.unlocked,.bookmark{color:#c9a84c;background:rgba(201,168,76,.16);border-color:rgba(201,168,76,.42);cursor:pointer}
+.tip-box{background:rgba(52,199,89,.06);border-left:2px solid rgba(52,199,89,.35);border-radius:0 10px 10px 0;padding:10px 12px;font-size:.76rem;color:rgba(240,235,224,.48);line-height:1.55;margin-top:10px}
+.lib-empty{text-align:center;padding:22px 0;color:rgba(240,235,224,.25);font-size:.82em}
+.lib-item{display:flex;align-items:center;justify-content:space-between;padding:11px 12px;border-radius:12px;border:.5px solid rgba(180,140,60,.12);background:rgba(180,140,60,.04);margin-bottom:8px;cursor:pointer}
+.lib-item:hover{background:rgba(180,140,60,.09);border-color:rgba(180,140,60,.3)}
+.lib-item-ar{font-family:'Amiri',serif;font-size:1.08rem;color:#c9a84c}.lib-item-fr{font-size:.72rem;color:rgba(240,235,224,.38)}.lib-item-meta{font-size:.66rem;color:rgba(180,140,60,.42);margin-top:2px}.lib-item-left{min-width:0}
+.lib-item-right{display:flex;gap:6px;flex-shrink:0}.lib-open,.lib-del,.lib-star{border:none;border-radius:8px;padding:7px 9px;font-size:.74rem;cursor:pointer;font-family:'DM Sans',sans-serif}
+.lib-open{background:rgba(180,140,60,.15);color:#c9a84c}.lib-star{background:rgba(255,255,255,.05);color:rgba(240,235,224,.45)}.lib-star.active{background:rgba(201,168,76,.18);color:#c9a84c}.lib-del{background:rgba(255,80,80,.08);color:rgba(255,100,100,.5)}
+.drop-zone{border:1.5px dashed rgba(180,140,60,.25);border-radius:12px;padding:24px 16px;text-align:center;cursor:pointer;background:rgba(180,140,60,.02);transition:.2s;margin-bottom:10px}
+.drop-zone:hover,.drop-zone.over{border-color:#c9a84c;background:rgba(180,140,60,.07)}.drop-zone input{display:none}.drop-icon{font-size:1.8rem;margin-bottom:6px}.drop-text{font-size:.82em;color:rgba(240,235,224,.4)}.drop-text strong{color:#c9a84c}
+.file-ok{background:rgba(52,199,89,.07);border:.5px solid rgba(52,199,89,.25);border-radius:10px;padding:9px 13px;font-size:.8em;color:#34c759;display:none;margin-bottom:10px}
+.hint{background:rgba(180,140,60,.04);border-left:2px solid rgba(180,140,60,.35);border-radius:0 8px 8px 0;padding:9px 11px;font-size:.76em;color:rgba(240,235,224,.4);line-height:1.55}
+.btn{width:100%;padding:12px;font-size:.9em;font-weight:600;border:none;border-radius:10px;cursor:pointer;font-family:'DM Sans',sans-serif;margin-bottom:8px}
+.btn:active{transform:scale(.98);opacity:.82}.btn-gold{background:linear-gradient(135deg,#c9a84c,#a8882e);color:#1a1200;box-shadow:0 4px 18px rgba(180,140,60,.22)}.btn-outline{background:transparent;border:.5px solid rgba(180,140,60,.25);color:rgba(240,235,224,.58)}.btn-save{background:rgba(52,199,89,.1);border:.5px solid rgba(52,199,89,.3);color:#34c759}.btn-danger{background:rgba(255,80,80,.08);border:.5px solid rgba(255,80,80,.18);color:rgba(255,120,120,.7)}
+select,input,textarea{width:100%;padding:11px 13px;font-size:14px;border-radius:10px;border:.5px solid rgba(180,140,60,.18);background:rgba(255,255,255,.04);color:#f0ebe0;font-family:'DM Sans',sans-serif;margin-bottom:10px;appearance:none}
+select option{background:#1a1600;color:#f0ebe0}textarea{min-height:82px;resize:vertical;line-height:1.5}.inline-row,.range-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ts-wrap{max-height:310px;overflow-y:auto;border-radius:10px;border:.5px solid rgba(180,140,60,.08);margin-bottom:12px}
+table{width:100%;border-collapse:collapse;font-size:.83em}th{color:rgba(180,140,60,.45);font-size:.68em;padding:6px 8px;text-align:left;border-bottom:.5px solid rgba(180,140,60,.08);font-weight:500;letter-spacing:.08em;text-transform:uppercase}td{padding:3px 8px;border-bottom:.5px solid rgba(255,255,255,.025)}table input{margin-bottom:0;padding:5px 7px;font-size:.86em}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(80px);background:rgba(30,28,20,.96);border:.5px solid rgba(180,140,60,.3);border-radius:10px;padding:10px 20px;font-size:.82em;color:#c9a84c;transition:.3s;z-index:99;white-space:nowrap;pointer-events:none}
+#toast.show{transform:translateX(-50%) translateY(0)}
+#step3{display:none}.page-big{text-align:center;margin-bottom:14px}.page-num{font-family:'Amiri',serif;font-size:3.9rem;color:#c9a84c;line-height:1}.page-sub{font-size:.75rem;color:rgba(240,235,224,.35);margin-top:3px}.loop-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(52,199,89,.07);border:.5px solid rgba(52,199,89,.22);border-radius:20px;padding:3px 13px;font-size:.7rem;color:#34c759;margin-bottom:12px}.loop-dot{width:5px;height:5px;border-radius:50%;background:#34c759;animation:pulse 1.5s infinite}@keyframes pulse{0%,100%{opacity:1}50%{opacity:.2}}
+audio{display:none}.progress-wrap{background:rgba(255,255,255,.06);border-radius:6px;height:6px;cursor:pointer;margin-bottom:5px}.progress-bar{background:linear-gradient(90deg,#c9a84c,#a8882e);border-radius:6px;height:100%;width:0;transition:width .18s}.time-row{display:flex;justify-content:space-between;font-size:.7rem;color:rgba(240,235,224,.3);margin-bottom:14px}.controls{display:flex;gap:8px;margin-bottom:10px}.ctrl-btn{flex:1;padding:11px;font-size:.86em;font-weight:600;border:none;border-radius:10px;cursor:pointer;font-family:'DM Sans',sans-serif}.ctrl-prev,.ctrl-next{background:rgba(255,255,255,.06);color:rgba(240,235,224,.65)}.ctrl-play{flex:1.6;background:linear-gradient(135deg,#c9a84c,#a8882e);color:#1a1200;font-size:.95em;box-shadow:0 4px 14px rgba(180,140,60,.18)}
+.live-adjust{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:8px}.live-adjust button{border:none;border-radius:8px;background:rgba(201,168,76,.1);color:#c9a84c;font-family:'DM Sans',sans-serif;font-size:.72rem;padding:8px 4px;cursor:pointer}.live-adjust button.big{background:rgba(255,255,255,.055);color:rgba(240,235,224,.7)}.live-adjust-note{font-size:.68rem;color:rgba(240,235,224,.32);text-align:center;margin-bottom:10px;line-height:1.4}
+.loop-info{text-align:center;font-size:.73rem;color:rgba(240,235,224,.28);margin-bottom:12px}.loop-info span{color:#c9a84c;font-weight:600}.settings-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}.small-label{display:block;font-size:.65rem;color:rgba(180,140,60,.45);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px}.badge-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}.badge-btn{border:.5px solid rgba(180,140,60,.18);background:rgba(255,255,255,.035);color:rgba(240,235,224,.55);border-radius:999px;padding:6px 10px;font-size:.72rem;cursor:pointer}.badge-btn.active{background:rgba(201,168,76,.18);color:#c9a84c;border-color:rgba(201,168,76,.45)}
 </style>
 </head>
 <body>
 <div class="container">
-  <header>
-    <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
-    <div class="surah-name-ar" id="surah-ar">القرآن الكريم</div>
-    <div class="surah-name-fr" id="surah-fr">Mémorisation page par page</div>
-    <div class="ornement"><div class="ornement-line"></div><div class="ornement-diamond"></div><div class="ornement-line"></div></div>
-  </header>
+<header>
+<div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+<div class="surah-name-ar" id="surah-ar">القرآن الكريم</div>
+<div class="surah-name-fr" id="surah-fr">Mémorisation page par page</div>
+<div class="ornement"><div class="ornement-line"></div><div class="ornement-diamond"></div><div class="ornement-line"></div></div>
+</header>
 
-  <!-- ══ ACCUEIL / BIBLIOTHÈQUE ══ -->
-  <div id="step0">
-    <div class="card">
-      <div class="card-title">Ma bibliothèque</div>
-      <div id="lib-list"><div class="lib-empty">Aucune sourate enregistrée</div></div>
-    </div>
-    <div class="card">
-      <div class="card-title">Nouvelle sourate</div>
-      <div class="drop-zone" id="drop-zone" onclick="document.getElementById('file-input').click()">
-        <input type="file" id="file-input" accept="audio/*,video/*">
-        <div class="drop-icon">🎵</div>
-        <div class="drop-text"><strong>Appuie ici pour importer un audio</strong><br>MP3, MP4, M4A…</div>
-      </div>
-      <div class="file-ok" id="file-ok">✅ <span id="file-name"></span></div>
-      <div class="hint">💡 Télécharge l'audio depuis <a href="https://yt1s.com" target="_blank">yt1s.com</a>. Le nom de la sourate est détecté depuis le nom du fichier.</div>
-    </div>
-    <button class="btn btn-gold" id="btn-step1" style="display:none" onclick="goStep1()">Configurer les timestamps →</button>
-  </div>
+<div id="step0">
+<div class="card"><div class="card-title">Profil</div><div class="profile-hello" id="hello-name">Bienvenue</div><div class="profile-sub" id="profile-sub">Ajoute ton prénom et ton objectif de pages à apprendre par jour.</div><div class="inline-row"><input type="text" id="profile-name" placeholder="Ton prénom"><input type="number" id="daily-goal" min="1" max="20" placeholder="Pages à apprendre/jour"></div><button class="btn btn-save" onclick="saveProfile()">💾 Enregistrer mon profil</button><button class="btn btn-danger" onclick="resetAllData()">🗑 Tout effacer sur cet appareil</button></div>
 
-  <!-- ══ ÉTAPE 1 : TIMESTAMPS ══ -->
-  <div id="step1" style="display:none">
-    <div class="card">
-      <div class="card-title">Timestamps des pages</div>
-      <p style="font-size:.78em;color:rgba(240,235,224,0.35);margin-bottom:10px;line-height:1.6;">Format <strong style="color:#c9a84c">mm:ss</strong> — entre le début de chaque page du Mushaf.</p>
-      <button class="btn btn-outline" onclick="autoFill()" style="margin-bottom:10px;">⚡ Estimation automatique</button>
-      <div class="ts-wrap">
-        <table>
-          <thead><tr><th>Page</th><th>Début</th><th>Durée</th></tr></thead>
-          <tbody id="ts-body"></tbody>
-        </table>
-      </div>
-      <button class="btn btn-save" onclick="saveAndLaunch()">💾 Enregistrer et lancer</button>
-      <button class="btn btn-outline" onclick="goStep0()">← Retour</button>
-    </div>
-  </div>
+<div class="card"><div class="card-title">Suivi</div><div class="mini-grid"><div class="stat"><strong id="st-sourates">0</strong><span>sourates</span></div><div class="stat"><strong id="st-pages">0</strong><span>pages apprises</span></div><div class="stat"><strong id="st-streak">0</strong><span>jours suite</span></div></div><div class="progress-track"><div class="progress-fill" id="daily-progress"></div></div><div class="progress-text"><span id="daily-progress-text">0 / 1 page apprise aujourd’hui</span><span id="daily-progress-percent">0%</span></div><div class="badges" id="badges"></div><div class="tip-box" id="daily-tip">Conseil : mieux vaut une petite session régulière qu’une grosse session rare.</div><button class="btn btn-outline" id="btn-resume-last" onclick="resumeLastSession()" style="display:none;margin-top:10px">↩ Reprendre la dernière session</button></div>
 
-  <!-- ══ ÉTAPE 2 : PLAYER ══ -->
-  <div id="step3">
-    <audio id="audio"></audio>
-    <div class="page-big">
-      <div class="page-num" id="page-num">1</div>
-      <div class="page-sub" id="page-sub">Page 1 du Mushaf</div>
-    </div>
-    <div style="text-align:center;margin-bottom:12px;"><span class="loop-badge"><span class="loop-dot"></span>Boucle infinie</span></div>
-    <div class="card" style="padding:14px 15px;">
-      <select id="page-select" onchange="goToPage(+this.value)"></select>
-      <div class="progress-wrap" id="prog-wrap"><div class="progress-bar" id="prog-bar"></div></div>
-      <div class="time-row"><span id="t-cur">0:00</span><span id="t-end">0:00</span></div>
-      <div class="controls">
-        <button class="ctrl-btn ctrl-prev" onclick="prev()">◀◀</button>
-        <button class="ctrl-btn ctrl-play" id="btn-play" onclick="togglePlay()">⏸</button>
-        <button class="ctrl-btn ctrl-next" onclick="next()">▶▶</button>
-      </div>
-      <div class="loop-info">Boucles : <span id="lc">1</span></div>
-    </div>
-    <button class="btn btn-save" onclick="saveCurrentTimestamps()" style="margin-top:4px;">💾 Sauvegarder les timestamps</button>
-    <button class="btn btn-outline" onclick="goStep1()">✏️ Modifier les timestamps</button>
-    <button class="btn btn-outline" onclick="goStep0()">← Bibliothèque</button>
-  </div>
+<div class="card"><div class="card-title">Ma bibliothèque</div><div id="lib-list"><div class="lib-empty">Aucune sourate enregistrée</div></div></div>
+
+<div class="card"><div class="card-title">Nouvelle sourate</div><select id="surah-select" onchange="manualSelectSurah(+this.value)"><option value="">Choisis la sourate téléchargée</option></select><div class="drop-zone" id="drop-zone" onclick="document.getElementById('file-input').click()"><input type="file" id="file-input" accept="audio/*,video/*"><div class="drop-icon">🎵</div><div class="drop-text"><strong>Appuie ici pour importer un audio</strong><br>Il restera dans ce navigateur</div></div><div class="file-ok" id="file-ok">✅ <span id="file-name"></span></div><div class="hint">Tu peux choisir la sourate avant ou après l’import. L’audio, les timestamps, les notes et la progression sont sauvegardés sur cet appareil.</div></div>
+<button class="btn btn-gold" id="btn-step1" style="display:none" onclick="goStep1()">Configurer les timestamps →</button>
 </div>
 
+<div id="step1" style="display:none">
+<div class="card"><div class="card-title">Timestamps des pages</div><p class="note">Format <strong style="color:#c9a84c">mm:ss</strong> ou <strong style="color:#c9a84c">hh:mm:ss</strong>. Mets le début de chaque page.</p><div class="inline-row"><button class="btn btn-outline" onclick="autoFill()">⚡ Estimation auto</button><button class="btn btn-outline" onclick="startQuickCorrect()">🎧 Correction rapide</button></div><button class="btn btn-outline" onclick="clearTimestamps()">🧹 Vider</button>
+<div class="quick-correct" id="quick-correct" style="display:none;background:rgba(180,140,60,.035);border:.5px solid rgba(180,140,60,.12);border-radius:12px;padding:10px;margin-bottom:12px"><div class="card-title">Correction rapide</div><div class="progress-text"><span id="quick-page">Page 1</span><span id="quick-time">0:00</span></div><div class="live-adjust"><button onclick="adjustQuick(-5)">-5s</button><button onclick="adjustQuick(-1)">-1s</button><button onclick="adjustQuick(1)">+1s</button><button onclick="adjustQuick(5)">+5s</button></div><div class="live-adjust"><button onclick="listenQuick()">Écouter</button><button onclick="prevQuick()">Préc.</button><button onclick="nextQuick()">Suiv.</button><button onclick="validateQuick()">Valider</button></div></div>
+<div class="ts-wrap"><table><thead><tr><th>Page</th><th>Début</th><th>Durée</th></tr></thead><tbody id="ts-body"></tbody></table></div><button class="btn btn-save" onclick="saveAndLaunch()">💾 Enregistrer et lancer</button><button class="btn btn-outline" onclick="goStep0()">← Retour</button></div>
+</div>
+
+<div id="step3">
+<audio id="audio"></audio>
+<div class="page-big"><div class="page-num" id="page-num">1</div><div class="page-sub" id="page-sub">Page 1 du Mushaf</div></div>
+<div style="text-align:center;margin-bottom:12px"><span class="loop-badge"><span class="loop-dot"></span><span id="loop-mode-label">Boucle page</span></span></div>
+<div class="card" style="padding:14px 15px"><select id="page-select" onchange="goToPage(+this.value,true)"></select><div class="progress-wrap" id="prog-wrap"><div class="progress-bar" id="prog-bar"></div></div><div class="time-row"><span id="t-cur">0:00</span><span id="t-end">0:00</span></div><div class="controls"><button class="ctrl-btn ctrl-prev" onclick="prev()">◀◀</button><button class="ctrl-btn ctrl-play" id="btn-play" onclick="togglePlay()">⏸</button><button class="ctrl-btn ctrl-next" onclick="next()">▶▶</button></div>
+<div class="live-adjust"><button class="big" onclick="adjustCurrentStart(-5)">Début -5s</button><button onclick="adjustCurrentStart(-1)">Début -1s</button><button onclick="adjustCurrentStart(1)">Début +1s</button><button class="big" onclick="adjustCurrentStart(5)">Début +5s</button></div>
+<div class="live-adjust"><button class="big" onclick="adjustCurrentEnd(-5)">Fin -5s</button><button onclick="adjustCurrentEnd(-1)">Fin -1s</button><button onclick="adjustCurrentEnd(1)">Fin +1s</button><button class="big" onclick="adjustCurrentEnd(5)">Fin +5s</button></div>
+<div class="live-adjust-note">Ajuste le début ou la fin pendant la lecture. Les timestamps sont sauvegardés automatiquement.</div><div class="loop-info">Boucles : <span id="lc">1</span></div></div>
+
+<div class="card"><div class="card-title">Progression de la sourate</div><div class="surah-dashboard"><div class="surah-mini"><strong id="surah-done-count">0/0</strong><span>pages apprises</span></div><div class="surah-mini"><strong id="surah-percent">0%</strong><span>avancement</span></div><div class="surah-mini"><strong id="surah-last-date">—</strong><span>dernière page apprise</span></div><div class="surah-mini"><strong id="surah-loop-count">0</strong><span>boucles page</span></div></div><div class="progress-track"><div class="progress-fill" id="surah-progress-fill"></div></div><div class="bookmark-row" id="bookmark-row"></div><button class="btn btn-save" onclick="markPageDone()">✅ Marquer cette page comme apprise</button><button class="btn btn-outline" onclick="toggleBookmark()">🔖 Ajouter / retirer un marque-page</button><button class="btn btn-outline" onclick="resetCurrentSurahProgress()">↺ Réinitialiser progression sourate</button></div>
+
+<div class="card"><div class="card-title">Plage de révision</div><p class="note">Choisis une plage de pages à répéter.</p><div class="range-row"><input type="number" id="range-start" min="1" placeholder="Page début"><input type="number" id="range-end" min="1" placeholder="Page fin"></div><button class="btn btn-outline" onclick="startRevisionRange()">▶ Réviser cette plage</button><button class="btn btn-outline" onclick="clearRevisionRange()">Désactiver la plage</button></div>
+
+<div class="card"><div class="card-title">Session</div><label class="small-label">Notes personnelles pour cette sourate</label><textarea id="surah-note" placeholder="Ex : page difficile, reprendre demain à la page 3..." oninput="saveSurahNote()"></textarea></div>
+
+<div class="card"><div class="card-title">Réglages</div><label class="small-label">Vitesse de lecture</label><div class="badge-row" id="speed-row"><button class="badge-btn" onclick="setSpeed(.75)">0.75×</button><button class="badge-btn" onclick="setSpeed(.85)">0.85×</button><button class="badge-btn active" onclick="setSpeed(1)">1×</button><button class="badge-btn" onclick="setSpeed(1.15)">1.15×</button><button class="badge-btn" onclick="setSpeed(1.25)">1.25×</button></div><div class="settings-row"><div><label class="small-label">Mode</label><select id="loop-mode" onchange="setLoopMode(this.value)"><option value="page">Boucle page</option><option value="next">Page suivante auto</option><option value="stop">Stop fin de page</option></select></div><div><label class="small-label">Répéter</label><select id="repeat-count" onchange="setRepeatCount(+this.value)"><option value="0">Infini</option><option value="1">1 fois</option><option value="2">2 fois</option><option value="3">3 fois</option><option value="5">5 fois</option><option value="10">10 fois</option></select></div></div></div>
+<button class="btn btn-save" onclick="saveCurrentTimestamps()">💾 Sauvegarder les timestamps</button><button class="btn btn-outline" onclick="goStep1()">✏️ Modifier les timestamps</button><button class="btn btn-outline" onclick="exportData()">⬇ Exporter mes données</button><button class="btn btn-outline" onclick="goStep0()">← Bibliothèque</button>
+</div>
+</div>
 <div id="toast"></div>
 
 <script>
-// ══ DONNÉES SOURATES ══
-const SOURATES = [
-  {num:1, ar:'سورة الفاتحة', fr:'Al-Fâtiha — L\'Ouverture', pages:1},
-  {num:2, ar:'سورة البقرة', fr:'Al-Baqarah — La Vache', pages:48},
-  {num:3, ar:'سورة آل عمران', fr:'Âl-\'Imrân — La Famille d\'Imrân', pages:20},
-  {num:4, ar:'سورة النساء', fr:'An-Nisâ — Les Femmes', pages:24},
-  {num:5, ar:'سورة المائدة', fr:'Al-Mâ\'ida — La Table Servie', pages:16},
-  {num:6, ar:'سورة الأنعام', fr:'Al-An\'âm — Les Bestiaux', pages:21},
-  {num:7, ar:'سورة الأعراف', fr:'Al-A\'râf — Les Murailles', pages:24},
-  {num:8, ar:'سورة الأنفال', fr:'Al-Anfâl — Le Butin', pages:9},
-  {num:9, ar:'سورة التوبة', fr:'At-Tawba — Le Repentir', pages:16},
-  {num:10, ar:'سورة يونس', fr:'Yûnus — Jonas', pages:11},
-  {num:11, ar:'سورة هود', fr:'Hûd', pages:11},
-  {num:12, ar:'سورة يوسف', fr:'Yûsuf — Joseph', pages:11},
-  {num:13, ar:'سورة الرعد', fr:'Ar-Ra\'d — Le Tonnerre', pages:6},
-  {num:14, ar:'سورة إبراهيم', fr:'Ibrâhîm — Abraham', pages:7},
-  {num:15, ar:'سورة الحجر', fr:'Al-Hijr', pages:6},
-  {num:16, ar:'سورة النحل', fr:'An-Nahl — Les Abeilles', pages:13},
-  {num:17, ar:'سورة الإسراء', fr:'Al-Isrâ — Le Voyage Nocturne', pages:12},
-  {num:18, ar:'سورة الكهف', fr:'Al-Kahf — La Caverne', pages:12},
-  {num:19, ar:'سورة مريم', fr:'Maryam — Marie', pages:6},
-  {num:20, ar:'سورة طه', fr:'Tâ-Hâ', pages:8},
-  {num:21, ar:'سورة الأنبياء', fr:'Al-Anbiyâ — Les Prophètes', pages:8},
-  {num:22, ar:'سورة الحج', fr:'Al-Hajj — Le Pèlerinage', pages:10},
-  {num:23, ar:'سورة المؤمنون', fr:'Al-Mu\'minûn — Les Croyants', pages:7},
-  {num:24, ar:'سورة النور', fr:'An-Nûr — La Lumière', pages:9},
-  {num:25, ar:'سورة الفرقان', fr:'Al-Furqân — Le Discernement', pages:7},
-  {num:26, ar:'سورة الشعراء', fr:'Ash-Shu\'arâ — Les Poètes', pages:11},
-  {num:27, ar:'سورة النمل', fr:'An-Naml — Les Fourmis', pages:9},
-  {num:28, ar:'سورة القصص', fr:'Al-Qasas — Le Récit', pages:10},
-  {num:29, ar:'سورة العنكبوت', fr:'Al-\'Ankabût — L\'Araignée', pages:7},
-  {num:30, ar:'سورة الروم', fr:'Ar-Rûm — Les Byzantins', pages:6},
-  {num:36, ar:'سورة يس', fr:'Yâ-Sîn', pages:4},
-  {num:55, ar:'سورة الرحمن', fr:'Ar-Rahmân — Le Tout Miséricordieux', pages:3},
-  {num:67, ar:'سورة الملك', fr:'Al-Mulk — La Royauté', pages:2},
-  {num:112, ar:'سورة الإخلاص', fr:'Al-Ikhlâs — Le Monothéisme Pur', pages:1},
-  {num:113, ar:'سورة الفلق', fr:'Al-Falaq — L\'Aube', pages:1},
-  {num:114, ar:'سورة الناس', fr:'An-Nâs — Les Hommes', pages:1},
-];
+const SURAH_START_PAGES=[
+[1,'سورة الفاتحة','Al-Fâtiha — L’Ouverture',1],[2,'سورة البقرة','Al-Baqarah — La Vache',2],[3,'سورة آل عمران','Âl-Imrân — La Famille d’Imrân',50],[4,'سورة النساء','An-Nisâ — Les Femmes',77],[5,'سورة المائدة','Al-Mâ’ida — La Table Servie',106],[6,'سورة الأنعام','Al-An’âm — Les Bestiaux',128],[7,'سورة الأعراف','Al-A’râf — Les Murailles',151],[8,'سورة الأنفال','Al-Anfâl — Le Butin',177],[9,'سورة التوبة','At-Tawba — Le Repentir',187],[10,'سورة يونس','Yûnus — Jonas',208],[11,'سورة هود','Hûd',221],[12,'سورة يوسف','Yûsuf — Joseph',235],[13,'سورة الرعد','Ar-Ra’d — Le Tonnerre',249],[14,'سورة إبراهيم','Ibrâhîm — Abraham',255],[15,'سورة الحجر','Al-Hijr',262],[16,'سورة النحل','An-Nahl — Les Abeilles',267],[17,'سورة الإسراء','Al-Isrâ — Le Voyage Nocturne',282],[18,'سورة الكهف','Al-Kahf — La Caverne',293],[19,'سورة مريم','Maryam — Marie',305],[20,'سورة طه','Tâ-Hâ',312],[21,'سورة الأنبياء','Al-Anbiyâ — Les Prophètes',322],[22,'سورة الحج','Al-Hajj — Le Pèlerinage',332],[23,'سورة المؤمنون','Al-Mu’minûn — Les Croyants',342],[24,'سورة النور','An-Nûr — La Lumière',350],[25,'سورة الفرقان','Al-Furqân — Le Discernement',359],[26,'سورة الشعراء','Ash-Shu’arâ — Les Poètes',367],[27,'سورة النمل','An-Naml — Les Fourmis',377],[28,'سورة القصص','Al-Qasas — Le Récit',385],[29,'سورة العنكبوت','Al-’Ankabût — L’Araignée',396],[30,'سورة الروم','Ar-Rûm — Les Byzantins',404],[31,'سورة لقمان','Luqmân',411],[32,'سورة السجدة','As-Sajda — La Prosternation',415],[33,'سورة الأحزاب','Al-Ahzâb — Les Coalisés',418],[34,'سورة سبأ','Saba',428],[35,'سورة فاطر','Fâtir — Le Créateur',434],[36,'سورة يس','Yâ-Sîn',440],[37,'سورة الصافات','As-Sâffât — Les Rangés',446],[38,'سورة ص','Sâd',453],[39,'سورة الزمر','Az-Zumar — Les Groupes',458],[40,'سورة غافر','Ghâfir — Le Pardonneur',467],[41,'سورة فصلت','Fussilat — Les Versets Détaillés',477],[42,'سورة الشورى','Ash-Shûrâ — La Consultation',483],[43,'سورة الزخرف','Az-Zukhruf — L’Ornement',489],[44,'سورة الدخان','Ad-Dukhân — La Fumée',496],[45,'سورة الجاثية','Al-Jâthiya — L’Agenouillée',499],[46,'سورة الأحقاف','Al-Ahqâf',502],[47,'سورة محمد','Muhammad',507],[48,'سورة الفتح','Al-Fath — La Victoire',511],[49,'سورة الحجرات','Al-Hujurât — Les Appartements',515],[50,'سورة ق','Qâf',518],[51,'سورة الذاريات','Adh-Dhâriyât — Les Vents',520],[52,'سورة الطور','At-Tûr',523],[53,'سورة النجم','An-Najm — L’Étoile',526],[54,'سورة القمر','Al-Qamar — La Lune',528],[55,'سورة الرحمن','Ar-Rahmân — Le Tout Miséricordieux',531],[56,'سورة الواقعة','Al-Wâqi’a — L’Événement',534],[57,'سورة الحديد','Al-Hadîd — Le Fer',537],[58,'سورة المجادلة','Al-Mujâdila — La Discussion',542],[59,'سورة الحشر','Al-Hashr — L’Exode',545],[60,'سورة الممتحنة','Al-Mumtahana — L’Éprouvée',549],[61,'سورة الصف','As-Saff — Le Rang',551],[62,'سورة الجمعة','Al-Jumu’a — Le Vendredi',553],[63,'سورة المنافقون','Al-Munâfiqûn — Les Hypocrites',554],[64,'سورة التغابن','At-Taghâbun — La Grande Perte',556],[65,'سورة الطلاق','At-Talâq — Le Divorce',558],[66,'سورة التحريم','At-Tahrîm — L’Interdiction',560],[67,'سورة الملك','Al-Mulk — La Royauté',562],[68,'سورة القلم','Al-Qalam — La Plume',564],[69,'سورة الحاقة','Al-Hâqqa — L’Inévitable',566],[70,'سورة المعارج','Al-Ma’ârij — Les Voies d’Ascension',568],[71,'سورة نوح','Nûh — Noé',570],[72,'سورة الجن','Al-Jinn — Les Djinns',572],[73,'سورة المزمل','Al-Muzzammil — L’Enveloppé',574],[74,'سورة المدثر','Al-Muddaththir',575],[75,'سورة القيامة','Al-Qiyâma',577],[76,'سورة الإنسان','Al-Insân',578],[77,'سورة المرسلات','Al-Mursalât',580],[78,'سورة النبأ','An-Naba',582],[79,'سورة النازعات','An-Nâzi’ât',583],[80,'سورة عبس','Abasa',585],[81,'سورة التكوير','At-Takwîr',586],[82,'سورة الانفطار','Al-Infitâr',587],[83,'سورة المطففين','Al-Mutaffifîn',587],[84,'سورة الانشقاق','Al-Inshiqâq',589],[85,'سورة البروج','Al-Burûj',590],[86,'سورة الطارق','At-Târiq',591],[87,'سورة الأعلى','Al-A’lâ',591],[88,'سورة الغاشية','Al-Ghâshiya',592],[89,'سورة الفجر','Al-Fajr',593],[90,'سورة البلد','Al-Balad',594],[91,'سورة الشمس','Ash-Shams',595],[92,'سورة الليل','Al-Layl',595],[93,'سورة الضحى','Ad-Duhâ',596],[94,'سورة الشرح','Ash-Sharh',596],[95,'سورة التين','At-Tîn',597],[96,'سورة العلق','Al-Alaq',597],[97,'سورة القدر','Al-Qadr',598],[98,'سورة البينة','Al-Bayyina',598],[99,'سورة الزلزلة','Az-Zalzala',599],[100,'سورة العاديات','Al-Adiyât',599],[101,'سورة القارعة','Al-Qâri’a',600],[102,'سورة التكاثر','At-Takâthur',600],[103,'سورة العصر','Al-Asr',601],[104,'سورة الهمزة','Al-Humaza',601],[105,'سورة الفيل','Al-Fîl',601],[106,'سورة قريش','Quraysh',602],[107,'سورة الماعون','Al-Mâ’ûn',602],[108,'سورة الكوثر','Al-Kawthar',602],[109,'سورة الكافرون','Al-Kâfirûn',603],[110,'سورة النصر','An-Nasr',603],[111,'سورة المسد','Al-Masad',603],[112,'سورة الإخلاص','Al-Ikhlâs',604],[113,'سورة الفلق','Al-Falaq',604],[114,'سورة الناس','An-Nâs',604]];
+const SOURATES=SURAH_START_PAGES.map((s,i)=>{const n=SURAH_START_PAGES[i+1]?.[3]||605;return{num:s[0],ar:s[1],fr:s[2],startPage:s[3],pages:Math.max(1,n-s[3])}});
+let audioURL=null,pages=[],pageCount=1,cur=0,loopCount=1,currentSurahKey=null,detectedSurah=null,currentFileName='',pendingLibKey=null,pendingFile=null,revisionRange=null,quickIndex=0,quickTimer=null,settings=loadSettings();
 
-// ══ STATE ══
-let audioURL = null;
-let audioBlob = null;
-let pages = [];
-let pageCount = 48;
-let cur = 0, loopCount = 1;
-let currentSurahKey = null; // clé de sauvegarde
-let detectedSurah = null;
-let currentFileName = '';
+function getLib(){try{return JSON.parse(localStorage.getItem('quran_lib_final_v1')||'{}')}catch(e){return{}}}
+function saveLib(lib){localStorage.setItem('quran_lib_final_v1',JSON.stringify(lib))}
+function loadSettings(){const b={name:'',dailyGoal:1,speed:1,loopMode:'page',repeatCount:0,lastSession:null,stats:{workedDays:{},pagesDoneTotal:0,streak:0,bestStreak:0}};try{return{...b,...JSON.parse(localStorage.getItem('quran_settings_final_v1')||'{}')}}catch(e){return b}}
+function saveSettings(){localStorage.setItem('quran_settings_final_v1',JSON.stringify(settings))}
+function dateKey(d=new Date()){return d.toISOString().slice(0,10)}
+function todayFr(){return new Date().toLocaleDateString('fr-FR')}
+function openAudioDB(){return new Promise((resolve,reject)=>{const req=indexedDB.open('quran_audio_db_final_v1',1);req.onupgradeneeded=e=>{const db=e.target.result;if(!db.objectStoreNames.contains('audios'))db.createObjectStore('audios',{keyPath:'key'})};req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)})}
+async function saveAudioToDB(key,file){try{const db=await openAudioDB();return new Promise((resolve,reject)=>{const tx=db.transaction('audios','readwrite');tx.objectStore('audios').put({key,blob:file,name:file.name,type:file.type,size:file.size,savedAt:new Date().toISOString()});tx.oncomplete=()=>resolve(true);tx.onerror=()=>reject(tx.error)})}catch(e){toast('Audio non stocké');return false}}
+async function getAudioFromDB(key){try{const db=await openAudioDB();return new Promise((resolve,reject)=>{const tx=db.transaction('audios','readonly');const req=tx.objectStore('audios').get(key);req.onsuccess=()=>resolve(req.result||null);req.onerror=()=>reject(req.error)})}catch(e){return null}}
+async function deleteAudioFromDB(key){try{const db=await openAudioDB();return new Promise((resolve,reject)=>{const tx=db.transaction('audios','readwrite');tx.objectStore('audios').delete(key);tx.oncomplete=()=>resolve(true);tx.onerror=()=>reject(tx.error)})}catch(e){return false}}
 
-// ══ BIBLIOTHÈQUE (localStorage) ══
-function getLib() {
-  try { return JSON.parse(localStorage.getItem('quran_lib') || '{}'); } catch(e) { return {}; }
-}
-function saveLib(lib) { localStorage.setItem('quran_lib', JSON.stringify(lib)); }
+function initSurahSelect(){const sel=document.getElementById('surah-select');sel.innerHTML='<option value="">Choisis la sourate téléchargée</option>';SOURATES.forEach(s=>{const o=document.createElement('option');o.value=s.num;o.textContent=`${s.num}. ${s.fr} • ${s.pages} page${s.pages>1?'s':''}`;sel.appendChild(o)})}
+function initProfile(){document.getElementById('profile-name').value=settings.name||'';document.getElementById('daily-goal').value=settings.dailyGoal||1;renderProfile()}
+function saveProfile(){settings.name=document.getElementById('profile-name').value.trim();settings.dailyGoal=Math.max(1,+document.getElementById('daily-goal').value||1);saveSettings();renderProfile();renderStats();toast('Profil sauvegardé')}
+function renderProfile(){const n=settings.name||'';document.getElementById('hello-name').textContent=n?`Bienvenue ${n}`:'Bienvenue';document.getElementById('profile-sub').textContent=n?`Objectif d’apprentissage : ${settings.dailyGoal||1} page${(settings.dailyGoal||1)>1?'s':''} à apprendre par jour.`:'Ajoute ton prénom et ton objectif de pages à apprendre par jour.'}
+function renderStats(){const lib=getLib();let learned=0;Object.values(lib).forEach(e=>learned+=e.donePages?Object.keys(e.donePages).length:0);const today=dateKey(),done=settings.stats?.workedDays?.[today]?.pages||0,goal=settings.dailyGoal||1,pct=Math.min(100,Math.round(done/goal*100));document.getElementById('st-sourates').textContent=Object.keys(lib).length;document.getElementById('st-pages').textContent=learned;document.getElementById('st-streak').textContent=settings.stats?.streak||0;document.getElementById('daily-progress').style.width=pct+'%';document.getElementById('daily-progress-text').textContent=`${done} / ${goal} page${goal>1?'s':''} apprise${goal>1?'s':''} aujourd’hui`;document.getElementById('daily-progress-percent').textContent=pct+'%';document.getElementById('btn-resume-last').style.display=settings.lastSession?'block':'none';renderBadges();renderTip()}
+function renderBadges(){const lib=getLib();let total=0;Object.values(lib).forEach(e=>total+=e.donePages?Object.keys(e.donePages).length:0);const streak=settings.stats?.streak||0,count=Object.keys(lib).length;const list=[['Premier pas',total>=1],['Régulier 3j',streak>=3],['Semaine 7j',streak>=7],['10 pages',total>=10],['50 pages',total>=50],['Bibliothèque',count>=3]];document.getElementById('badges').innerHTML=list.map(([n,ok])=>`<span class="badge ${ok?'unlocked':''}">${ok?'✓':'○'} ${n}</span>`).join('')}
+function renderTip(){const tips=['Conseil : répète une page lentement avant d’augmenter la vitesse.','Astuce : écoute la même page 3 fois sans regarder, puis récite.','Marque une page comme apprise seulement après l’avoir vraiment travaillée.','Mieux vaut 10 minutes chaque jour qu’une grosse session irrégulière.'];document.getElementById('daily-tip').textContent=tips[new Date().getDate()%tips.length]}
+async function renderLib(){const lib=getLib(),keys=Object.keys(lib).sort((a,b)=>((lib[b].favorite===true)-(lib[a].favorite===true))||((lib[b].lastOpenedAt||'').localeCompare(lib[a].lastOpenedAt||'')));const c=document.getElementById('lib-list');if(!keys.length){c.innerHTML='<div class="lib-empty">Aucune sourate enregistrée</div>';renderStats();return}c.innerHTML='';keys.forEach(key=>{const e=lib[key],done=e.donePages?Object.keys(e.donePages).length:0,pct=e.pages?.length?Math.round(done/e.pages.length*100):0;const div=document.createElement('div');div.className='lib-item';div.innerHTML=`<div class="lib-item-left" onclick="openFromLib('${key}')"><div class="lib-item-ar">${e.ar}</div><div class="lib-item-fr">${e.fr}</div><div class="lib-item-meta">${e.pages.length} pages · audio gardé · ${done}/${e.pages.length} apprises · ${pct}% · p.${(e.lastPage||0)+1}</div></div><div class="lib-item-right"><button class="lib-star ${e.favorite?'active':''}" onclick="toggleFavorite('${key}')">★</button><button class="lib-open" onclick="openFromLib('${key}')">▶</button><button class="lib-del" onclick="deleteFromLib('${key}')">✕</button></div>`;c.appendChild(div)});renderStats()}
 
-function renderLib() {
-  const lib = getLib();
-  const keys = Object.keys(lib);
-  const container = document.getElementById('lib-list');
-  if (keys.length === 0) {
-    container.innerHTML = '<div class="lib-empty">Aucune sourate enregistrée</div>';
-    return;
-  }
-  container.innerHTML = '';
-  keys.forEach(key => {
-    const entry = lib[key];
-    const div = document.createElement('div');
-    div.className = 'lib-item';
-    div.innerHTML = `
-      <div class="lib-item-left">
-        <div class="lib-item-ar">${entry.ar}</div>
-        <div class="lib-item-fr">${entry.fr}</div>
-        <div class="lib-item-meta">${entry.pages.length} pages · sauvegardé le ${entry.savedAt}</div>
-      </div>
-      <div class="lib-item-right">
-        <button class="lib-open" onclick="openFromLib('${key}')">▶ Ouvrir</button>
-        <button class="lib-del" onclick="deleteFromLib('${key}')">✕</button>
-      </div>`;
-    container.appendChild(div);
-  });
-}
+async function openFromLib(key){const lib=getLib(),e=lib[key];if(!e)return;currentSurahKey=key;detectedSurah=SOURATES.find(s=>s.num===e.surahNum)||null;pageCount=e.pages.length;pages=e.pages;cur=e.lastPage||0;updateHeader(detectedSurah,e.ar,e.fr);document.getElementById('surah-select').value=e.surahNum||'';const saved=await getAudioFromDB(key);if(saved?.blob){if(audioURL)URL.revokeObjectURL(audioURL);audioURL=URL.createObjectURL(saved.blob);currentFileName=saved.name||e.fileName||'audio enregistré';document.getElementById('file-name').textContent=currentFileName;document.getElementById('file-ok').style.display='block';launchPlayer(cur);toast('Audio chargé');return}pendingLibKey=key;show('step0');hide('step1');hide('step3');toast('Audio introuvable : réimporte-le une fois')}
+function toggleFavorite(key){const lib=getLib();if(!lib[key])return;lib[key].favorite=!lib[key].favorite;saveLib(lib);renderLib()}
+async function deleteFromLib(key){if(!confirm('Supprimer cette sourate, ses timestamps et son audio ?'))return;const lib=getLib();delete lib[key];saveLib(lib);await deleteAudioFromDB(key);renderLib();toast('Supprimé')}
+async function resetAllData(){if(!confirm('Tout effacer : profil, timestamps, progression et audios ?'))return;localStorage.removeItem('quran_lib_final_v1');localStorage.removeItem('quran_settings_final_v1');try{indexedDB.deleteDatabase('quran_audio_db_final_v1')}catch(e){}settings=loadSettings();initProfile();renderLib();document.getElementById('file-ok').style.display='none';document.getElementById('btn-step1').style.display='none';toast('Tout a été effacé')}
 
-function openFromLib(key) {
-  const lib = getLib();
-  const entry = lib[key];
-  if (!entry) return;
-  // besoin d'un nouveau fichier audio
-  currentSurahKey = key;
-  detectedSurah = SOURATES.find(s => s.num === entry.surahNum) || null;
-  pageCount = entry.pages.length;
-  pages = entry.pages;
-  updateHeader(detectedSurah, entry.ar, entry.fr);
-  // demander le fichier audio
-  promptAudioForLib(key, entry);
-}
+function manualSelectSurah(num){const s=SOURATES.find(x=>x.num===num);if(!s)return;detectedSurah=s;pageCount=s.pages;currentSurahKey='surah_'+s.num;updateHeader(s);const saved=getLib()[currentSurahKey];if(saved?.pages?.length===pageCount){pages=saved.pages;cur=saved.lastPage||0;document.getElementById('btn-step1').textContent='▶ Reprendre ou modifier';document.getElementById('btn-step1').style.display='block';toast(`${s.fr} : timestamps sauvegardés`)}else{pages=[];cur=0;document.getElementById('btn-step1').textContent=`Configurer ${pageCount} timestamp${pageCount>1?'s':''} →`;if(audioURL||pendingFile)document.getElementById('btn-step1').style.display='block';toast(`${s.fr} : ${pageCount} timestamp${pageCount>1?'s':''}`)}if(pendingFile)loadFile(pendingFile)}
+function detectSurah(filename){const name=filename.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');const aliases={1:['fatiha','fateha'],2:['baqarah','baqara'],18:['kahf'],36:['yasin','ya-sin','yassine'],55:['rahman'],67:['mulk'],112:['ikhlas'],113:['falaq'],114:['nas']};for(const [num,words]of Object.entries(aliases))if(words.some(w=>name.includes(w)))return SOURATES.find(s=>s.num===+num);return null}
+function updateHeader(s,ar,fr){document.getElementById('surah-ar').textContent=ar||(s?s.ar:'القرآن الكريم');document.getElementById('surah-fr').textContent=fr||(s?s.fr:'Mémorisation page par page');if(s)pageCount=s.pages}
 
-function promptAudioForLib(key, entry) {
-  // on montre step0 avec message spécial
-  show('step0'); hide('step1'); hide('step3');
-  document.getElementById('drop-zone').style.display = 'block';
-  document.getElementById('file-ok').style.display = 'none';
-  document.getElementById('btn-step1').style.display = 'none';
-  // message
-  toast('📂 Importe le fichier audio de ' + entry.ar + ' pour reprendre');
-  // quand le fichier arrive → lancer directement
-  pendingLibKey = key;
-}
+const fileInput=document.getElementById('file-input'),dropZone=document.getElementById('drop-zone');
+fileInput.addEventListener('change',e=>loadFile(e.target.files[0]));dropZone.addEventListener('dragover',e=>{e.preventDefault();dropZone.classList.add('over')});dropZone.addEventListener('dragleave',()=>dropZone.classList.remove('over'));dropZone.addEventListener('drop',e=>{e.preventDefault();dropZone.classList.remove('over');loadFile(e.dataTransfer.files[0])});
+async function loadFile(file){if(!file)return;pendingFile=file;if(audioURL)URL.revokeObjectURL(audioURL);audioURL=URL.createObjectURL(file);currentFileName=file.name;document.getElementById('file-name').textContent=file.name;document.getElementById('file-ok').style.display='block';const selected=+document.getElementById('surah-select').value;detectedSurah=selected?SOURATES.find(s=>s.num===selected):detectSurah(file.name);if(!detectedSurah){updateHeader(null);document.getElementById('btn-step1').style.display='none';toast('Audio chargé. Choisis maintenant la sourate.');return}pageCount=detectedSurah.pages;updateHeader(detectedSurah);document.getElementById('surah-select').value=detectedSurah.num;currentSurahKey='surah_'+detectedSurah.num;await saveAudioToDB(currentSurahKey,file);const lib=getLib();if(pendingLibKey&&lib[pendingLibKey]){pages=lib[pendingLibKey].pages;pageCount=pages.length;currentSurahKey=pendingLibKey;cur=lib[pendingLibKey].lastPage||0;pendingLibKey=null;pendingFile=null;await saveAudioToDB(currentSurahKey,file);launchPlayer(cur);return}if(lib[currentSurahKey]?.pages?.length===pageCount){pages=lib[currentSurahKey].pages;cur=lib[currentSurahKey].lastPage||0;document.getElementById('btn-step1').textContent='▶ Reprendre ou modifier';toast('Audio et timestamps retrouvés')}else{pages=[];cur=0;document.getElementById('btn-step1').textContent=`Configurer ${pageCount} timestamp${pageCount>1?'s':''} →`;toast('Audio enregistré')}pendingFile=null;document.getElementById('btn-step1').style.display='block'}
 
-let pendingLibKey = null;
+function goStep0(){show('step0');hide('step1');hide('step3');renderLib();updateHeader(null)}
+function goStep1(){if(!detectedSurah){toast('Choisis la sourate avant de continuer');return}if(!audioURL){toast('Importe d’abord un fichier audio');return}show('step1');hide('step0');hide('step3');buildTable();if(pages.length===pageCount){pages.forEach((s,i)=>{const el=document.getElementById('t'+(i+1));if(el)el.value=fmt(s)});updatePreviews()}}
+function buildTable(){const tbody=document.getElementById('ts-body');tbody.innerHTML='';for(let i=1;i<=pageCount;i++){const real=detectedSurah?detectedSurah.startPage+i-1:i;const tr=document.createElement('tr');tr.innerHTML=`<td style="font-weight:600;color:rgba(240,235,224,.75);white-space:nowrap">${i}<br><small style="color:rgba(180,140,60,.4)">Mushaf ${real}</small></td><td><input type="text" id="t${i}" placeholder="0:00" oninput="updatePreviews()"></td><td style="color:rgba(180,140,60,.45);font-size:.74em;white-space:nowrap"><span id="dur${i}">—</span><br><button onclick="startQuickCorrect(${i-1})" style="margin-top:4px;border:none;border-radius:6px;padding:4px 7px;background:rgba(201,168,76,.12);color:#c9a84c;font-size:.68rem;cursor:pointer">corriger</button></td>`;tbody.appendChild(tr)}}
+function autoFill(){const audio=document.getElementById('audio');audio.src=audioURL;const fill=total=>{const p=total/pageCount;for(let i=1;i<=pageCount;i++)document.getElementById('t'+i).value=fmt(Math.round((i-1)*p));updatePreviews();toast('Estimation remplie')};if(audio.duration&&!isNaN(audio.duration))fill(audio.duration);else{audio.onloadedmetadata=()=>fill(audio.duration);setTimeout(()=>{if(!audio.duration||isNaN(audio.duration))fill(7200)},1200)}}
+function clearTimestamps(){for(let i=1;i<=pageCount;i++){const el=document.getElementById('t'+i);if(el)el.value=''}updatePreviews()}
+function updatePreviews(){const vals=[];for(let i=1;i<=pageCount;i++)vals.push(parseTime(document.getElementById('t'+i)?.value));for(let i=0;i<pageCount;i++){const el=document.getElementById('dur'+(i+1));if(!el)continue;if(vals[i]===null){el.textContent='—';continue}const end=vals[i+1]!=null?vals[i+1]:null;el.textContent=end!==null?fmt(Math.max(0,end-vals[i])):''}}
+function saveAndLaunch(){stopQuickPreview();pages=[];for(let i=1;i<=pageCount;i++){const t=parseTime(document.getElementById('t'+i)?.value);if(t===null){toast('Timestamp manquant page '+i);return}if(i>1&&t<pages[i-2]){toast('Page '+i+' avant la précédente');return}pages.push(t)}saveCurrentTimestamps();launchPlayer(0)}
+function saveCurrentTimestamps(){if(!pages.length||!detectedSurah)return;const lib=getLib(),key=currentSurahKey||'surah_'+detectedSurah.num;currentSurahKey=key;lib[key]={...(lib[key]||{}),ar:detectedSurah.ar,fr:detectedSurah.fr,surahNum:detectedSurah.num,startPage:detectedSurah.startPage,pages,savedAt:todayFr(),lastOpenedAt:new Date().toISOString(),lastPage:cur,fileName:currentFileName,hasAudio:true};if(!lib[key].donePages)lib[key].donePages={};if(!lib[key].bookmarks)lib[key].bookmarks={};if(!lib[key].pageLoops)lib[key].pageLoops={};saveLib(lib);settings.lastSession={key,surahNum:detectedSurah.num,page:cur};saveSettings();renderStats();toast('Sauvegardé')}
 
-function deleteFromLib(key) {
-  if (!confirm('Supprimer cette sourate de la bibliothèque ?')) return;
-  const lib = getLib();
-  delete lib[key];
-  saveLib(lib);
-  renderLib();
-  toast('Supprimé');
-}
+function buildSelect(){const sel=document.getElementById('page-select');sel.innerHTML='';pages.forEach((start,i)=>{const opt=document.createElement('option'),real=detectedSurah?detectedSurah.startPage+i:i+1;opt.value=i;opt.textContent=`Page ${i+1} / Mushaf ${real} — ${fmt(start)} (${fmt(getEnd(i)-start)})`;sel.appendChild(opt)})}
+function launchPlayer(start=0){if(!audioURL){toast('Importe l’audio');return}show('step3');hide('step0');hide('step1');buildSelect();const audio=document.getElementById('audio');audio.src=audioURL;audio.playbackRate=settings.speed||1;audio.removeEventListener('timeupdate',onTimeUpdate);audio.addEventListener('timeupdate',onTimeUpdate);document.getElementById('loop-mode').value=settings.loopMode||'page';document.getElementById('repeat-count').value=settings.repeatCount||0;updateSpeedButtons();updateLoopLabel();loadSurahNote();goToPage(Math.min(start,pages.length-1),true);renderSurahDashboard()}
+function getEnd(i){if(pages[i+1]!==undefined)return pages[i+1];const a=document.getElementById('audio');if(a.duration&&!isNaN(a.duration))return a.duration;return pages[i]+Math.round(7200/Math.max(1,pageCount))}
+function goToPage(i,autoplay=true){cur=i;loopCount=1;const real=detectedSurah?detectedSurah.startPage+i:i+1;document.getElementById('lc').textContent=loopCount;document.getElementById('page-num').textContent=i+1;document.getElementById('page-sub').textContent=`Page ${i+1} · Mushaf ${real}`;document.getElementById('page-select').value=i;document.getElementById('t-end').textContent=fmt(getEnd(i)-pages[i]);document.getElementById('prog-bar').style.width='0%';document.getElementById('t-cur').textContent='0:00';const audio=document.getElementById('audio');audio.currentTime=pages[i];audio.playbackRate=settings.speed||1;settings.lastSession={key:currentSurahKey,surahNum:detectedSurah?.num,page:cur};saveSettings();saveLastPageOnly();renderSurahDashboard();if(autoplay)audio.play().then(()=>document.getElementById('btn-play').textContent='⏸').catch(()=>{document.getElementById('btn-play').textContent='▶';toast('Appuie sur lecture pour démarrer')})}
+function recordLoop(){const e=getCurrentEntry();if(!e)return;ensureEntryExtras(e);e.pageLoops[cur]=(e.pageLoops[cur]||0)+1;saveCurrentEntry(e);renderSurahDashboard()}
+function onTimeUpdate(){const audio=document.getElementById('audio'),t=audio.currentTime,end=getEnd(cur);if(t>=end){const repeat=settings.repeatCount||0;if(settings.loopMode==='stop'){audio.pause();audio.currentTime=pages[cur];document.getElementById('btn-play').textContent='▶';return}if(settings.loopMode==='next'){next();return}if(repeat===0||loopCount<repeat){loopCount++;document.getElementById('lc').textContent=loopCount;recordLoop();audio.currentTime=pages[cur];audio.play()}else next();return}const elapsed=Math.max(0,t-pages[cur]),total=Math.max(1,end-pages[cur]);document.getElementById('prog-bar').style.width=Math.min(100,elapsed/total*100)+'%';document.getElementById('t-cur').textContent=fmt(Math.round(elapsed))}
+function togglePlay(){const a=document.getElementById('audio');if(a.paused){a.play();document.getElementById('btn-play').textContent='⏸'}else{a.pause();document.getElementById('btn-play').textContent='▶'}}
+document.getElementById('prog-wrap').addEventListener('click',e=>{const r=e.currentTarget.getBoundingClientRect(),pct=(e.clientX-r.left)/r.width;document.getElementById('audio').currentTime=pages[cur]+pct*(getEnd(cur)-pages[cur])});
+function adjustCurrentStart(delta){if(!pages.length)return;const audio=document.getElementById('audio'),was=!audio.paused;let v=pages[cur]+delta;const min=cur>0?pages[cur-1]+1:0,max=cur<pages.length-1?pages[cur+1]-1:Math.max(min,getEnd(cur)-1);v=Math.max(min,Math.min(max,v));const shift=v-pages[cur];pages[cur]=Math.round(v);audio.currentTime=Math.max(0,audio.currentTime+shift);document.getElementById('t-end').textContent=fmt(getEnd(cur)-pages[cur]);buildSelect();document.getElementById('page-select').value=cur;saveCurrentTimestamps();if(was)audio.play();toast('Début page '+(cur+1)+' : '+fmt(pages[cur]))}
+function adjustCurrentEnd(delta){if(!pages.length||cur>=pages.length-1){toast('La fin de la dernière page dépend de la durée audio');return}const audio=document.getElementById('audio'),was=!audio.paused;let v=pages[cur+1]+delta;const min=pages[cur]+1,max=cur+2<pages.length?pages[cur+2]-1:getEnd(cur+1)-1;v=Math.max(min,Math.min(max,v));pages[cur+1]=Math.round(v);document.getElementById('t-end').textContent=fmt(getEnd(cur)-pages[cur]);buildSelect();document.getElementById('page-select').value=cur;saveCurrentTimestamps();if(was)audio.play();toast('Fin page '+(cur+1)+' : '+fmt(pages[cur+1]))}
+function prev(){if(revisionRange&&cur>revisionRange.start)goToPage(cur-1,true);else if(!revisionRange&&cur>0)goToPage(cur-1,true)}
+function next(){if(revisionRange){if(cur<revisionRange.end)goToPage(cur+1,true);else goToPage(revisionRange.start,true);return}if(cur<pages.length-1)goToPage(cur+1,true)}
+function setSpeed(speed){settings.speed=speed;saveSettings();document.getElementById('audio').playbackRate=speed;updateSpeedButtons();toast('Vitesse : '+speed+'×')}
+function updateSpeedButtons(){document.querySelectorAll('#speed-row .badge-btn').forEach(b=>b.classList.toggle('active',b.textContent.trim()===(settings.speed+'×')))}
+function setLoopMode(mode){settings.loopMode=mode;saveSettings();updateLoopLabel()}function setRepeatCount(n){settings.repeatCount=n;saveSettings()}
+function updateLoopLabel(){const l=document.getElementById('loop-mode-label'),m=settings.loopMode||'page';l.textContent=m==='page'?'Boucle page':m==='next'?'Page suivante auto':'Stop fin de page'}
 
-// ══ DÉTECTION SOURATE ══
-function detectSurah(filename) {
-  const name = filename.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-  const keywords = {
-    1:['fatiha','fateha','ouverture'],2:['baqarah','baqara','vache'],
-    3:['imran','omran'],4:['nisa','nisaa','femmes'],5:['maida','table'],
-    6:['anam','anaam'],7:['araf'],8:['anfal'],9:['tawba','repentir'],
-    10:['yunus','younes'],11:['hud'],12:['yusuf','yousouf'],
-    13:['rad','raad'],14:['ibrahim'],15:['hijr'],16:['nahl'],
-    17:['isra'],18:['kahf'],19:['maryam','mariam'],20:['taha'],
-    21:['anbiya'],22:['hajj'],23:['muminun'],24:['nour','nur'],
-    25:['furqan'],26:['shuara'],27:['naml'],28:['qasas'],
-    29:['ankabut'],30:['rum'],36:['yasin','ya-sin','yassine'],
-    55:['rahman'],67:['mulk'],112:['ikhlas'],113:['falaq'],114:['nas'],
-  };
-  for (const [num, kws] of Object.entries(keywords)) {
-    if (kws.some(k => name.includes(k))) return SOURATES.find(s => s.num === +num) || null;
-  }
-  return null;
-}
+function getCurrentEntry(){if(!currentSurahKey)return null;return getLib()[currentSurahKey]||null}
+function saveCurrentEntry(e){if(!currentSurahKey)return;const lib=getLib();lib[currentSurahKey]=e;saveLib(lib)}
+function ensureEntryExtras(e){if(!e.donePages)e.donePages={};if(!e.bookmarks)e.bookmarks={};if(!e.pageLoops)e.pageLoops={};return e}
+function renderSurahDashboard(){const e=getCurrentEntry();if(!e||!pages.length)return;ensureEntryExtras(e);const done=Object.keys(e.donePages).length,total=pages.length,pct=total?Math.round(done/total*100):0;document.getElementById('surah-done-count').textContent=done+'/'+total;document.getElementById('surah-percent').textContent=pct+'%';document.getElementById('surah-last-date').textContent=e.lastWorkedAt||'—';document.getElementById('surah-loop-count').textContent=e.pageLoops?.[cur]||0;document.getElementById('surah-progress-fill').style.width=pct+'%';const row=document.getElementById('bookmark-row');const keys=Object.keys(e.bookmarks||{}).sort((a,b)=>+a-+b);row.innerHTML=keys.length?keys.map(k=>`<button class="bookmark" onclick="goToPage(${+k},true)">🔖 Page ${+k+1}</button>`).join(''):'<span class="note">Aucun marque-page</span>'}
+function markPageDone(){if(!detectedSurah)return;const today=dateKey();if(!settings.stats)settings.stats={workedDays:{},pagesDoneTotal:0,streak:0,bestStreak:0};if(!settings.stats.workedDays)settings.stats.workedDays={};const day=settings.stats.workedDays[today]||{pages:0,items:{}};const id=`${detectedSurah.num}_${cur}`;const e=getCurrentEntry();if(e){ensureEntryExtras(e);e.donePages[cur]=true;e.lastWorkedAt=todayFr();saveCurrentEntry(e)}if(!day.items[id]){day.items[id]=true;day.pages++;settings.stats.workedDays[today]=day;settings.stats.pagesDoneTotal=(settings.stats.pagesDoneTotal||0)+1;updateStreak();saveSettings()}renderStats();renderSurahDashboard();renderLib();toast('Page '+(cur+1)+' marquée comme apprise')}
+function updateStreak(){const days=settings.stats.workedDays||{};let streak=0,d=new Date();while(true){const k=dateKey(d);if(days[k]?.pages>0){streak++;d.setDate(d.getDate()-1)}else break}settings.stats.streak=streak;settings.stats.bestStreak=Math.max(settings.stats.bestStreak||0,streak)}
+function toggleBookmark(){const e=getCurrentEntry();if(!e)return;ensureEntryExtras(e);if(e.bookmarks[cur])delete e.bookmarks[cur];else e.bookmarks[cur]=true;saveCurrentEntry(e);renderSurahDashboard();toast(e.bookmarks[cur]?'Marque-page ajouté':'Marque-page retiré')}
+function resetCurrentSurahProgress(){const e=getCurrentEntry();if(!e)return;if(!confirm('Réinitialiser la progression de cette sourate ? Les timestamps restent sauvegardés.'))return;e.donePages={};e.bookmarks={};e.pageLoops={};e.lastWorkedAt='';saveCurrentEntry(e);renderSurahDashboard();renderStats();toast('Progression réinitialisée')}
+function startRevisionRange(){const a=Math.max(1,+document.getElementById('range-start').value||1),b=Math.min(pages.length,+document.getElementById('range-end').value||pages.length);if(a>b){toast('Plage invalide');return}revisionRange={start:a-1,end:b-1};goToPage(revisionRange.start,true);toast('Plage active : pages '+a+' à '+b)}
+function clearRevisionRange(){revisionRange=null;toast('Plage désactivée')}
+function saveSurahNote(){const e=getCurrentEntry();if(!e)return;e.note=document.getElementById('surah-note').value;saveCurrentEntry(e)}
+function loadSurahNote(){document.getElementById('surah-note').value=getCurrentEntry()?.note||''}
+function saveLastPageOnly(){const e=getCurrentEntry();if(!e)return;e.lastPage=cur;e.lastOpenedAt=new Date().toISOString();ensureEntryExtras(e);saveCurrentEntry(e)}
+function resumeLastSession(){const last=settings.lastSession;if(last?.key)openFromLib(last.key)}
+function exportData(){const data={library:getLib(),settings,exportedAt:new Date().toISOString()};const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='memorisation-coran-sauvegarde.json';a.click();URL.revokeObjectURL(url)}
 
-function updateHeader(surah, arOverride, frOverride) {
-  document.getElementById('surah-ar').textContent = arOverride || (surah ? surah.ar : 'القرآن الكريم');
-  document.getElementById('surah-fr').textContent = frOverride || (surah ? surah.fr : 'Mémorisation page par page');
-  if (surah) pageCount = surah.pages;
-}
+function startQuickCorrect(index=0){if(!audioURL){toast('Importe d’abord un audio');return}quickIndex=Math.max(0,Math.min(pageCount-1,index));document.getElementById('quick-correct').style.display='block';focusQuick()}
+function focusQuick(){const input=document.getElementById('t'+(quickIndex+1));if(!input)return;if(!input.value)input.value=quickIndex===0?'0:00':fmt((parseTime(document.getElementById('t'+quickIndex)?.value)||quickIndex*120)+120);input.focus();document.getElementById('quick-page').textContent='Page '+(quickIndex+1);document.getElementById('quick-time').textContent=input.value;updatePreviews()}
+function adjustQuick(delta){const input=document.getElementById('t'+(quickIndex+1));let t=parseTime(input.value);if(t===null)t=0;t=Math.max(0,t+delta);input.value=fmt(t);document.getElementById('quick-time').textContent=input.value;updatePreviews();listenQuick()}
+function listenQuick(){const input=document.getElementById('t'+(quickIndex+1)),t=parseTime(input?.value);if(t===null){toast('Timestamp manquant');return}const audio=document.getElementById('audio');audio.src=audioURL;audio.currentTime=t;audio.playbackRate=settings.speed||1;audio.play().catch(()=>toast('Appuie sur lecture'));clearTimeout(quickTimer);quickTimer=setTimeout(()=>audio.pause(),5500)}
+function stopQuickPreview(){clearTimeout(quickTimer);document.getElementById('audio').pause()}
+function validateQuick(){updatePreviews();if(quickIndex<pageCount-1){quickIndex++;focusQuick();listenQuick()}else{stopQuickPreview();toast('Correction terminée')}}
+function prevQuick(){if(quickIndex>0){quickIndex--;focusQuick();listenQuick()}}function nextQuick(){if(quickIndex<pageCount-1){quickIndex++;focusQuick();listenQuick()}}
 
-// ══ IMPORT FICHIER ══
-const fileInput = document.getElementById('file-input');
-const dropZone = document.getElementById('drop-zone');
-fileInput.addEventListener('change', e => loadFile(e.target.files[0]));
-dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('over'); });
-dropZone.addEventListener('dragleave', () => dropZone.classList.remove('over'));
-dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('over'); loadFile(e.dataTransfer.files[0]); });
+function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>el.classList.remove('show'),2800)}
+function fmt(s){if(s==null||isNaN(s))return'?';s=Math.max(0,Math.round(s));const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60;return h>0?h+':'+String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0'):m+':'+String(sec).padStart(2,'0')}
+function parseTime(str){if(!str||!str.trim())return null;const p=str.trim().split(':').map(Number);if(p.some(isNaN))return null;if(p.length===2)return p[0]*60+p[1];if(p.length===3)return p[0]*3600+p[1]*60+p[2];return null}
+function show(id){document.getElementById(id).style.display='block'}function hide(id){document.getElementById(id).style.display='none'}
 
-function loadFile(file) {
-  if (!file) return;
-  if (audioURL) URL.revokeObjectURL(audioURL);
-  audioURL = URL.createObjectURL(file);
-  currentFileName = file.name;
-  document.getElementById('file-name').textContent = file.name;
-  document.getElementById('file-ok').style.display = 'block';
-
-  detectedSurah = detectSurah(file.name);
-  updateHeader(detectedSurah);
-
-  // si on attendait ce fichier pour une entrée de bibliothèque
-  if (pendingLibKey) {
-    const lib = getLib();
-    const entry = lib[pendingLibKey];
-    if (entry) {
-      pages = entry.pages;
-      pageCount = pages.length;
-      currentSurahKey = pendingLibKey;
-      pendingLibKey = null;
-      launchPlayer();
-      return;
-    }
-  }
-
-  // sinon → vérifier si déjà dans la lib
-  const key = makeSurahKey(file.name, detectedSurah);
-  currentSurahKey = key;
-  const lib = getLib();
-  if (lib[key]) {
-    // timestamps déjà sauvegardés → proposer de reprendre
-    pages = lib[key].pages;
-    pageCount = pages.length;
-    document.getElementById('btn-step1').style.display = 'block';
-    document.getElementById('btn-step1').textContent = '▶ Reprendre (timestamps sauvegardés)';
-    toast('✅ Timestamps retrouvés — appuie sur Reprendre !');
-  } else {
-    document.getElementById('btn-step1').style.display = 'block';
-    document.getElementById('btn-step1').textContent = 'Configurer les timestamps →';
-  }
-}
-
-function makeSurahKey(filename, surah) {
-  if (surah) return 'surah_' + surah.num;
-  return 'file_' + filename.replace(/[^a-z0-9]/gi,'').toLowerCase().slice(0,20);
-}
-
-// ══ NAVIGATION ══
-function goStep0() {
-  show('step0'); hide('step1'); hide('step3');
-  renderLib();
-  updateHeader(null);
-}
-function goStep1() {
-  if (!audioURL) { toast('⚠ Importe d\'abord un fichier audio'); return; }
-  show('step1'); hide('step0'); hide('step3');
-  buildTable();
-  // pré-remplir si timestamps dispo
-  if (pages.length === pageCount) {
-    pages.forEach((s,i) => { const el = document.getElementById('t'+(i+1)); if(el) el.value = fmt(s); });
-    updatePreviews();
-  } else {
-    const lib = getLib();
-    const saved = lib[currentSurahKey];
-    if (saved && saved.pages.length) {
-      saved.pages.forEach((s,i) => { const el = document.getElementById('t'+(i+1)); if(el) el.value = fmt(s); });
-      updatePreviews();
-    }
-  }
-}
-
-function goStep0btn() { goStep0(); }
-
-function saveAndLaunch() {
-  pages = [];
-  for (let i = 1; i <= pageCount; i++) {
-    const t = parse(document.getElementById('t'+i)?.value);
-    if (t === null) { toast('⚠ Timestamp manquant page '+i); return; }
-    pages.push(t);
-  }
-  saveCurrentTimestamps();
-  launchPlayer();
-}
-
-function saveCurrentTimestamps() {
-  if (!pages.length) return;
-  const lib = getLib();
-  const surah = detectedSurah;
-  const key = currentSurahKey || makeSurahKey(currentFileName, surah);
-  currentSurahKey = key;
-  const now = new Date();
-  const dateStr = now.toLocaleDateString('fr-FR');
-  lib[key] = {
-    ar: surah ? surah.ar : currentFileName,
-    fr: surah ? surah.fr : currentFileName,
-    surahNum: surah ? surah.num : 0,
-    pages: pages,
-    savedAt: dateStr,
-    fileName: currentFileName,
-  };
-  saveLib(lib);
-  toast('💾 Timestamps sauvegardés !');
-}
-
-function launchPlayer() {
-  show('step3'); hide('step0'); hide('step1');
-  buildSelect();
-  const audio = document.getElementById('audio');
-  audio.src = audioURL;
-  audio.addEventListener('timeupdate', onTimeUpdate);
-  goToPage(0);
-}
-
-// ══ TABLE TIMESTAMPS ══
-function buildTable() {
-  const tbody = document.getElementById('ts-body');
-  tbody.innerHTML = '';
-  for (let i = 1; i <= pageCount; i++) {
-    const tr = document.createElement('tr');
-    tr.innerHTML = `<td style="font-weight:500;color:rgba(240,235,224,.75);white-space:nowrap">${i}</td>
-      <td><input type="text" id="t${i}" placeholder="0:00" oninput="updatePreviews()"></td>
-      <td style="color:rgba(180,140,60,.45);font-size:.74em;white-space:nowrap" id="dur${i}">—</td>`;
-    tbody.appendChild(tr);
-  }
-}
-
-function autoFill() {
-  const audio = document.getElementById('audio');
-  audio.src = audioURL;
-  const fill = (total) => {
-    const perPage = total / pageCount;
-    for (let i = 1; i <= pageCount; i++) {
-      document.getElementById('t'+i).value = fmt(Math.round((i-1)*perPage));
-    }
-    updatePreviews();
-  };
-  if (audio.duration && !isNaN(audio.duration)) fill(audio.duration);
-  else { audio.onloadedmetadata = () => fill(audio.duration); setTimeout(() => { if (!audio.duration || isNaN(audio.duration)) fill(8700); }, 1500); }
-}
-
-function updatePreviews() {
-  const vals = [];
-  for (let i = 1; i <= pageCount; i++) vals.push(parse(document.getElementById('t'+i)?.value));
-  for (let i = 0; i < pageCount; i++) {
-    const el = document.getElementById('dur'+(i+1)); if (!el) continue;
-    if (vals[i] === null) { el.textContent = '—'; continue; }
-    const end = (vals[i+1] != null) ? vals[i+1] : null;
-    el.textContent = end !== null ? fmt(end - vals[i]) : '';
-  }
-}
-
-// ══ SELECT ══
-function buildSelect() {
-  const sel = document.getElementById('page-select');
-  sel.innerHTML = '';
-  pages.forEach((start, i) => {
-    const opt = document.createElement('option');
-    opt.value = i;
-    opt.textContent = `Page ${i+1}  —  ${fmt(start)}  (${fmt(getEnd(i)-start)})`;
-    sel.appendChild(opt);
-  });
-}
-
-// ══ PLAYER ══
-function getEnd(i) {
-  if (pages[i+1] !== undefined) return pages[i+1];
-  const audio = document.getElementById('audio');
-  if (audio.duration && !isNaN(audio.duration)) return audio.duration;
-  return pages[i] + Math.round(8700 / pageCount);
-}
-
-function goToPage(i) {
-  cur = i; loopCount = 1;
-  document.getElementById('lc').textContent = loopCount;
-  document.getElementById('page-num').textContent = i+1;
-  document.getElementById('page-sub').textContent = 'Page '+(i+1)+' du Mushaf';
-  document.getElementById('page-select').value = i;
-  document.getElementById('t-end').textContent = fmt(getEnd(i)-pages[i]);
-  document.getElementById('prog-bar').style.width = '0%';
-  document.getElementById('t-cur').textContent = '0:00';
-  const audio = document.getElementById('audio');
-  audio.currentTime = pages[i];
-  audio.play();
-  document.getElementById('btn-play').textContent = '⏸';
-}
-
-function onTimeUpdate() {
-  const audio = document.getElementById('audio');
-  const t = audio.currentTime;
-  if (t >= getEnd(cur)) {
-    loopCount++;
-    document.getElementById('lc').textContent = loopCount;
-    audio.currentTime = pages[cur]; audio.play(); return;
-  }
-  const elapsed = t - pages[cur];
-  const total = getEnd(cur) - pages[cur];
-  document.getElementById('prog-bar').style.width = Math.min(100,(elapsed/total)*100)+'%';
-  document.getElementById('t-cur').textContent = fmt(Math.round(elapsed));
-}
-
-function togglePlay() {
-  const audio = document.getElementById('audio');
-  if (audio.paused) { audio.play(); document.getElementById('btn-play').textContent = '⏸'; }
-  else { audio.pause(); document.getElementById('btn-play').textContent = '▶'; }
-}
-
-document.getElementById('prog-wrap').addEventListener('click', e => {
-  const rect = e.currentTarget.getBoundingClientRect();
-  const pct = (e.clientX - rect.left) / rect.width;
-  document.getElementById('audio').currentTime = pages[cur] + pct*(getEnd(cur)-pages[cur]);
-});
-
-function prev() { if (cur > 0) goToPage(cur-1); }
-function next() { if (cur < pages.length-1) goToPage(cur+1); }
-
-// ══ TOAST ══
-let toastTimer;
-function toast(msg) {
-  const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => el.classList.remove('show'), 2800);
-}
-
-// ══ UTILS ══
-function fmt(s) {
-  if (s == null || isNaN(s)) return '?';
-  s = Math.round(s);
-  const h = Math.floor(s/3600), m = Math.floor((s%3600)/60), sec = s%60;
-  if (h > 0) return h+':'+String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0');
-  return m+':'+String(sec).padStart(2,'0');
-}
-function parse(str) {
-  if (!str || !str.trim()) return null;
-  const p = str.trim().split(':').map(Number);
-  if (p.some(isNaN)) return null;
-  if (p.length===2) return p[0]*60+p[1];
-  if (p.length===3) return p[0]*3600+p[1]*60+p[2];
-  return null;
-}
-function show(id) { document.getElementById(id).style.display='block'; }
-function hide(id) { document.getElementById(id).style.display='none'; }
-
-// ══ INIT ══
-renderLib();
+initSurahSelect();initProfile();renderLib();
 </script>
 </body>
 </html>
