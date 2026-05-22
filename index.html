@@ -74,7 +74,123 @@ audio{display:none}.progress-wrap{background:rgba(255,255,255,.06);border-radius
 
 <div class="card"><div class="card-title">Ma bibliothèque</div><div id="lib-list"><div class="lib-empty">Aucune sourate enregistrée</div></div></div>
 
-<div class="card"><div class="card-title">Nouvelle sourate</div><select id="surah-select" onchange="manualSelectSurah(+this.value)"><option value="">Choisis la sourate téléchargée</option></select><div class="drop-zone" id="drop-zone" onclick="document.getElementById('file-input').click()"><input type="file" id="file-input" accept="audio/*,video/*"><div class="drop-icon">🎵</div><div class="drop-text"><strong>Appuie ici pour importer un audio</strong><br>Il restera dans ce navigateur</div></div><div class="file-ok" id="file-ok">✅ <span id="file-name"></span></div><div class="hint">Tu peux choisir la sourate avant ou après l’import. L’audio, les timestamps, les notes et la progression sont sauvegardés sur cet appareil.</div></div>
+<div class="card"><div class="card-title">Nouvelle sourate</div><select id="surah-select" onchange="manualSelectSurah(+this.value)">
+<option value="">Choisis la sourate téléchargée</option>
+<option value="1">1. Al-Fâtiha — L’Ouverture • 1 page</option>
+<option value="2">2. Al-Baqarah — La Vache • 48 pages</option>
+<option value="3">3. Âl-Imrân — La Famille d’Imrân • 27 pages</option>
+<option value="4">4. An-Nisâ — Les Femmes • 29 pages</option>
+<option value="5">5. Al-Mâ’ida — La Table Servie • 22 pages</option>
+<option value="6">6. Al-An’âm — Les Bestiaux • 23 pages</option>
+<option value="7">7. Al-A’râf — Les Murailles • 26 pages</option>
+<option value="8">8. Al-Anfâl — Le Butin • 10 pages</option>
+<option value="9">9. At-Tawba — Le Repentir • 21 pages</option>
+<option value="10">10. Yûnus — Jonas • 13 pages</option>
+<option value="11">11. Hûd • 14 pages</option>
+<option value="12">12. Yûsuf — Joseph • 14 pages</option>
+<option value="13">13. Ar-Ra’d — Le Tonnerre • 6 pages</option>
+<option value="14">14. Ibrâhîm — Abraham • 7 pages</option>
+<option value="15">15. Al-Hijr • 5 pages</option>
+<option value="16">16. An-Nahl — Les Abeilles • 15 pages</option>
+<option value="17">17. Al-Isrâ — Le Voyage Nocturne • 11 pages</option>
+<option value="18">18. Al-Kahf — La Caverne • 12 pages</option>
+<option value="19">19. Maryam — Marie • 7 pages</option>
+<option value="20">20. Tâ-Hâ • 10 pages</option>
+<option value="21">21. Al-Anbiyâ — Les Prophètes • 10 pages</option>
+<option value="22">22. Al-Hajj — Le Pèlerinage • 10 pages</option>
+<option value="23">23. Al-Mu’minûn — Les Croyants • 8 pages</option>
+<option value="24">24. An-Nûr — La Lumière • 9 pages</option>
+<option value="25">25. Al-Furqân — Le Discernement • 8 pages</option>
+<option value="26">26. Ash-Shu’arâ — Les Poètes • 10 pages</option>
+<option value="27">27. An-Naml — Les Fourmis • 8 pages</option>
+<option value="28">28. Al-Qasas — Le Récit • 11 pages</option>
+<option value="29">29. Al-’Ankabût — L’Araignée • 8 pages</option>
+<option value="30">30. Ar-Rûm — Les Byzantins • 7 pages</option>
+<option value="31">31. Luqmân • 4 pages</option>
+<option value="32">32. As-Sajda — La Prosternation • 3 pages</option>
+<option value="33">33. Al-Ahzâb — Les Coalisés • 10 pages</option>
+<option value="34">34. Saba • 6 pages</option>
+<option value="35">35. Fâtir — Le Créateur • 6 pages</option>
+<option value="36">36. Yâ-Sîn • 6 pages</option>
+<option value="37">37. As-Sâffât — Les Rangés • 7 pages</option>
+<option value="38">38. Sâd • 5 pages</option>
+<option value="39">39. Az-Zumar — Les Groupes • 9 pages</option>
+<option value="40">40. Ghâfir — Le Pardonneur • 10 pages</option>
+<option value="41">41. Fussilat — Les Versets Détaillés • 6 pages</option>
+<option value="42">42. Ash-Shûrâ — La Consultation • 6 pages</option>
+<option value="43">43. Az-Zukhruf — L’Ornement • 7 pages</option>
+<option value="44">44. Ad-Dukhân — La Fumée • 3 pages</option>
+<option value="45">45. Al-Jâthiya — L’Agenouillée • 3 pages</option>
+<option value="46">46. Al-Ahqâf • 5 pages</option>
+<option value="47">47. Muhammad • 4 pages</option>
+<option value="48">48. Al-Fath — La Victoire • 4 pages</option>
+<option value="49">49. Al-Hujurât — Les Appartements • 3 pages</option>
+<option value="50">50. Qâf • 2 pages</option>
+<option value="51">51. Adh-Dhâriyât — Les Vents • 3 pages</option>
+<option value="52">52. At-Tûr • 3 pages</option>
+<option value="53">53. An-Najm — L’Étoile • 2 pages</option>
+<option value="54">54. Al-Qamar — La Lune • 3 pages</option>
+<option value="55">55. Ar-Rahmân — Le Tout Miséricordieux • 3 pages</option>
+<option value="56">56. Al-Wâqi’a — L’Événement • 3 pages</option>
+<option value="57">57. Al-Hadîd — Le Fer • 5 pages</option>
+<option value="58">58. Al-Mujâdila — La Discussion • 3 pages</option>
+<option value="59">59. Al-Hashr — L’Exode • 4 pages</option>
+<option value="60">60. Al-Mumtahana — L’Éprouvée • 2 pages</option>
+<option value="61">61. As-Saff — Le Rang • 2 pages</option>
+<option value="62">62. Al-Jumu’a — Le Vendredi • 1 page</option>
+<option value="63">63. Al-Munâfiqûn — Les Hypocrites • 2 pages</option>
+<option value="64">64. At-Taghâbun — La Grande Perte • 2 pages</option>
+<option value="65">65. At-Talâq — Le Divorce • 2 pages</option>
+<option value="66">66. At-Tahrîm — L’Interdiction • 2 pages</option>
+<option value="67">67. Al-Mulk — La Royauté • 2 pages</option>
+<option value="68">68. Al-Qalam — La Plume • 2 pages</option>
+<option value="69">69. Al-Hâqqa — L’Inévitable • 2 pages</option>
+<option value="70">70. Al-Ma’ârij — Les Voies d’Ascension • 2 pages</option>
+<option value="71">71. Nûh — Noé • 2 pages</option>
+<option value="72">72. Al-Jinn — Les Djinns • 2 pages</option>
+<option value="73">73. Al-Muzzammil — L’Enveloppé • 1 page</option>
+<option value="74">74. Al-Muddaththir • 2 pages</option>
+<option value="75">75. Al-Qiyâma • 1 page</option>
+<option value="76">76. Al-Insân • 2 pages</option>
+<option value="77">77. Al-Mursalât • 2 pages</option>
+<option value="78">78. An-Naba • 1 page</option>
+<option value="79">79. An-Nâzi’ât • 2 pages</option>
+<option value="80">80. Abasa • 1 page</option>
+<option value="81">81. At-Takwîr • 1 page</option>
+<option value="82">82. Al-Infitâr • 1 page</option>
+<option value="83">83. Al-Mutaffifîn • 2 pages</option>
+<option value="84">84. Al-Inshiqâq • 1 page</option>
+<option value="85">85. Al-Burûj • 1 page</option>
+<option value="86">86. At-Târiq • 1 page</option>
+<option value="87">87. Al-A’lâ • 1 page</option>
+<option value="88">88. Al-Ghâshiya • 1 page</option>
+<option value="89">89. Al-Fajr • 1 page</option>
+<option value="90">90. Al-Balad • 1 page</option>
+<option value="91">91. Ash-Shams • 1 page</option>
+<option value="92">92. Al-Layl • 1 page</option>
+<option value="93">93. Ad-Duhâ • 1 page</option>
+<option value="94">94. Ash-Sharh • 1 page</option>
+<option value="95">95. At-Tîn • 1 page</option>
+<option value="96">96. Al-Alaq • 1 page</option>
+<option value="97">97. Al-Qadr • 1 page</option>
+<option value="98">98. Al-Bayyina • 1 page</option>
+<option value="99">99. Az-Zalzala • 1 page</option>
+<option value="100">100. Al-Adiyât • 1 page</option>
+<option value="101">101. Al-Qâri’a • 1 page</option>
+<option value="102">102. At-Takâthur • 1 page</option>
+<option value="103">103. Al-Asr • 1 page</option>
+<option value="104">104. Al-Humaza • 1 page</option>
+<option value="105">105. Al-Fîl • 1 page</option>
+<option value="106">106. Quraysh • 1 page</option>
+<option value="107">107. Al-Mâ’ûn • 1 page</option>
+<option value="108">108. Al-Kawthar • 1 page</option>
+<option value="109">109. Al-Kâfirûn • 1 page</option>
+<option value="110">110. An-Nasr • 1 page</option>
+<option value="111">111. Al-Masad • 1 page</option>
+<option value="112">112. Al-Ikhlâs • 1 page</option>
+<option value="113">113. Al-Falaq • 1 page</option>
+<option value="114">114. An-Nâs • 1 page</option>
+</select><div class="drop-zone" id="drop-zone" onclick="document.getElementById('file-input').click()"><input type="file" id="file-input" accept="audio/*,video/*"><div class="drop-icon">🎵</div><div class="drop-text"><strong>Appuie ici pour importer un audio</strong><br>Il restera dans ce navigateur</div></div><div class="file-ok" id="file-ok">✅ <span id="file-name"></span></div><div class="hint">Tu peux choisir la sourate avant ou après l’import. L’audio, les timestamps, les notes et la progression sont sauvegardés sur cet appareil.</div></div>
 <button class="btn btn-gold" id="btn-step1" style="display:none" onclick="goStep1()">Configurer les timestamps →</button>
 </div>
 
@@ -91,7 +207,7 @@ audio{display:none}.progress-wrap{background:rgba(255,255,255,.06);border-radius
 <div class="card" style="padding:14px 15px"><select id="page-select" onchange="goToPage(+this.value,true)"></select><div class="progress-wrap" id="prog-wrap"><div class="progress-bar" id="prog-bar"></div></div><div class="time-row"><span id="t-cur">0:00</span><span id="t-end">0:00</span></div><div class="controls"><button class="ctrl-btn ctrl-prev" onclick="prev()">◀◀</button><button class="ctrl-btn ctrl-play" id="btn-play" onclick="togglePlay()">⏸</button><button class="ctrl-btn ctrl-next" onclick="next()">▶▶</button></div>
 <div class="live-adjust"><button class="big" onclick="adjustCurrentStart(-5)">Début -5s</button><button onclick="adjustCurrentStart(-1)">Début -1s</button><button onclick="adjustCurrentStart(1)">Début +1s</button><button class="big" onclick="adjustCurrentStart(5)">Début +5s</button></div>
 <div class="live-adjust"><button class="big" onclick="adjustCurrentEnd(-5)">Fin -5s</button><button onclick="adjustCurrentEnd(-1)">Fin -1s</button><button onclick="adjustCurrentEnd(1)">Fin +1s</button><button class="big" onclick="adjustCurrentEnd(5)">Fin +5s</button></div>
-<div class="live-adjust-note">Ajuste le début ou la fin pendant la lecture. Les timestamps sont sauvegardés automatiquement.</div><div class="loop-info">Boucles : <span id="lc">1</span></div></div>
+<div class="live-adjust-note">Ajuste le début ou la fin pendant la lecture. Les boutons Début te placent au début, les boutons Fin te placent 3 secondes avant la coupure. Les timestamps sont sauvegardés automatiquement.</div><div class="loop-info">Boucles : <span id="lc">1</span></div></div>
 
 <div class="card"><div class="card-title">Progression de la sourate</div><div class="surah-dashboard"><div class="surah-mini"><strong id="surah-done-count">0/0</strong><span>pages apprises</span></div><div class="surah-mini"><strong id="surah-percent">0%</strong><span>avancement</span></div><div class="surah-mini"><strong id="surah-last-date">—</strong><span>dernière page apprise</span></div><div class="surah-mini"><strong id="surah-loop-count">0</strong><span>boucles page</span></div></div><div class="progress-track"><div class="progress-fill" id="surah-progress-fill"></div></div><div class="bookmark-row" id="bookmark-row"></div><button class="btn btn-save" onclick="markPageDone()">✅ Marquer cette page comme apprise</button><button class="btn btn-outline" onclick="toggleBookmark()">🔖 Ajouter / retirer un marque-page</button><button class="btn btn-outline" onclick="resetCurrentSurahProgress()">↺ Réinitialiser progression sourate</button></div>
 
@@ -122,7 +238,29 @@ async function saveAudioToDB(key,file){try{const db=await openAudioDB();return n
 async function getAudioFromDB(key){try{const db=await openAudioDB();return new Promise((resolve,reject)=>{const tx=db.transaction('audios','readonly');const req=tx.objectStore('audios').get(key);req.onsuccess=()=>resolve(req.result||null);req.onerror=()=>reject(req.error)})}catch(e){return null}}
 async function deleteAudioFromDB(key){try{const db=await openAudioDB();return new Promise((resolve,reject)=>{const tx=db.transaction('audios','readwrite');tx.objectStore('audios').delete(key);tx.oncomplete=()=>resolve(true);tx.onerror=()=>reject(tx.error)})}catch(e){return false}}
 
-function initSurahSelect(){const sel=document.getElementById('surah-select');sel.innerHTML='<option value="">Choisis la sourate téléchargée</option>';SOURATES.forEach(s=>{const o=document.createElement('option');o.value=s.num;o.textContent=`${s.num}. ${s.fr} • ${s.pages} page${s.pages>1?'s':''}`;sel.appendChild(o)})}
+
+function initSurahSelect(){
+  const sel=document.getElementById('surah-select');
+  if(!sel) return;
+
+  // Sécurité : les options sont déjà écrites en HTML.
+  // On ne vide le menu que si SOURATES est bien chargé.
+  if(!Array.isArray(SOURATES) || SOURATES.length < 100){
+    console.warn('Liste JS non disponible, conservation des options HTML.');
+    return;
+  }
+
+  const current=sel.value;
+  sel.innerHTML='<option value="">Choisis la sourate téléchargée</option>';
+  SOURATES.forEach(s=>{
+    const o=document.createElement('option');
+    o.value=s.num;
+    o.textContent=`${s.num}. ${s.fr} • ${s.pages} page${s.pages>1?'s':''}`;
+    sel.appendChild(o);
+  });
+  if(current) sel.value=current;
+}
+
 function initProfile(){document.getElementById('profile-name').value=settings.name||'';document.getElementById('daily-goal').value=settings.dailyGoal||1;renderProfile()}
 function saveProfile(){settings.name=document.getElementById('profile-name').value.trim();settings.dailyGoal=Math.max(1,+document.getElementById('daily-goal').value||1);saveSettings();renderProfile();renderStats();toast('Profil sauvegardé')}
 function renderProfile(){const n=settings.name||'';document.getElementById('hello-name').textContent=n?`Bienvenue ${n}`:'Bienvenue';document.getElementById('profile-sub').textContent=n?`Objectif d’apprentissage : ${settings.dailyGoal||1} page${(settings.dailyGoal||1)>1?'s':''} à apprendre par jour.`:'Ajoute ton prénom et ton objectif de pages à apprendre par jour.'}
@@ -161,8 +299,77 @@ function recordLoop(){const e=getCurrentEntry();if(!e)return;ensureEntryExtras(e
 function onTimeUpdate(){const audio=document.getElementById('audio'),t=audio.currentTime,end=getEnd(cur);if(t>=end){const repeat=settings.repeatCount||0;if(settings.loopMode==='stop'){audio.pause();audio.currentTime=pages[cur];document.getElementById('btn-play').textContent='▶';return}if(settings.loopMode==='next'){next();return}if(repeat===0||loopCount<repeat){loopCount++;document.getElementById('lc').textContent=loopCount;recordLoop();audio.currentTime=pages[cur];audio.play()}else next();return}const elapsed=Math.max(0,t-pages[cur]),total=Math.max(1,end-pages[cur]);document.getElementById('prog-bar').style.width=Math.min(100,elapsed/total*100)+'%';document.getElementById('t-cur').textContent=fmt(Math.round(elapsed))}
 function togglePlay(){const a=document.getElementById('audio');if(a.paused){a.play();document.getElementById('btn-play').textContent='⏸'}else{a.pause();document.getElementById('btn-play').textContent='▶'}}
 document.getElementById('prog-wrap').addEventListener('click',e=>{const r=e.currentTarget.getBoundingClientRect(),pct=(e.clientX-r.left)/r.width;document.getElementById('audio').currentTime=pages[cur]+pct*(getEnd(cur)-pages[cur])});
-function adjustCurrentStart(delta){if(!pages.length)return;const audio=document.getElementById('audio'),was=!audio.paused;let v=pages[cur]+delta;const min=cur>0?pages[cur-1]+1:0,max=cur<pages.length-1?pages[cur+1]-1:Math.max(min,getEnd(cur)-1);v=Math.max(min,Math.min(max,v));const shift=v-pages[cur];pages[cur]=Math.round(v);audio.currentTime=Math.max(0,audio.currentTime+shift);document.getElementById('t-end').textContent=fmt(getEnd(cur)-pages[cur]);buildSelect();document.getElementById('page-select').value=cur;saveCurrentTimestamps();if(was)audio.play();toast('Début page '+(cur+1)+' : '+fmt(pages[cur]))}
-function adjustCurrentEnd(delta){if(!pages.length||cur>=pages.length-1){toast('La fin de la dernière page dépend de la durée audio');return}const audio=document.getElementById('audio'),was=!audio.paused;let v=pages[cur+1]+delta;const min=pages[cur]+1,max=cur+2<pages.length?pages[cur+2]-1:getEnd(cur+1)-1;v=Math.max(min,Math.min(max,v));pages[cur+1]=Math.round(v);document.getElementById('t-end').textContent=fmt(getEnd(cur)-pages[cur]);buildSelect();document.getElementById('page-select').value=cur;saveCurrentTimestamps();if(was)audio.play();toast('Fin page '+(cur+1)+' : '+fmt(pages[cur+1]))}
+function adjustCurrentStart(delta){
+  if(!pages.length) return;
+
+  const audio=document.getElementById('audio');
+
+  let newStart=pages[cur]+delta;
+  const min=cur>0 ? pages[cur-1]+1 : 0;
+  const max=cur<pages.length-1 ? pages[cur+1]-1 : Math.max(min,getEnd(cur)-1);
+
+  newStart=Math.max(min,Math.min(max,newStart));
+  newStart=Math.round(newStart);
+  pages[cur]=newStart;
+
+  // Téléporte au début de la page pour régler précisément.
+  audio.currentTime=newStart;
+  audio.playbackRate=settings.speed||1;
+
+  document.getElementById('t-cur').textContent='0:00';
+  document.getElementById('t-end').textContent=fmt(getEnd(cur)-pages[cur]);
+  document.getElementById('prog-bar').style.width='0%';
+
+  buildSelect();
+  document.getElementById('page-select').value=cur;
+
+  saveCurrentTimestamps();
+
+  audio.play().then(()=>{
+    document.getElementById('btn-play').textContent='⏸';
+  }).catch(()=>{
+    document.getElementById('btn-play').textContent='▶';
+  });
+
+  toast('Début page '+(cur+1)+' : '+fmt(pages[cur]));
+}
+function adjustCurrentEnd(delta){
+  if(!pages.length || cur>=pages.length-1){
+    toast('La fin de la dernière page dépend de la durée audio');
+    return;
+  }
+
+  const audio=document.getElementById('audio');
+
+  let newEnd=pages[cur+1]+delta;
+  const min=pages[cur]+1;
+  const max=cur+2<pages.length ? pages[cur+2]-1 : Math.max(min,getEnd(cur+1)-1);
+
+  newEnd=Math.max(min,Math.min(max,newEnd));
+  newEnd=Math.round(newEnd);
+  pages[cur+1]=newEnd;
+
+  // Téléporte juste avant la fin pour régler précisément.
+  // 3 secondes avant la coupure, mais jamais avant le début de la page.
+  const previewTime=Math.max(pages[cur], newEnd-3);
+  audio.currentTime=previewTime;
+  audio.playbackRate=settings.speed||1;
+
+  document.getElementById('t-end').textContent=fmt(getEnd(cur)-pages[cur]);
+  document.getElementById('t-cur').textContent=fmt(Math.max(0,Math.round(audio.currentTime-pages[cur])));
+  buildSelect();
+  document.getElementById('page-select').value=cur;
+
+  saveCurrentTimestamps();
+
+  audio.play().then(()=>{
+    document.getElementById('btn-play').textContent='⏸';
+  }).catch(()=>{
+    document.getElementById('btn-play').textContent='▶';
+  });
+
+  toast('Fin page '+(cur+1)+' : '+fmt(pages[cur+1]));
+}
 function prev(){if(revisionRange&&cur>revisionRange.start)goToPage(cur-1,true);else if(!revisionRange&&cur>0)goToPage(cur-1,true)}
 function next(){if(revisionRange){if(cur<revisionRange.end)goToPage(cur+1,true);else goToPage(revisionRange.start,true);return}if(cur<pages.length-1)goToPage(cur+1,true)}
 function setSpeed(speed){settings.speed=speed;saveSettings();document.getElementById('audio').playbackRate=speed;updateSpeedButtons();toast('Vitesse : '+speed+'×')}
@@ -199,7 +406,13 @@ function fmt(s){if(s==null||isNaN(s))return'?';s=Math.max(0,Math.round(s));const
 function parseTime(str){if(!str||!str.trim())return null;const p=str.trim().split(':').map(Number);if(p.some(isNaN))return null;if(p.length===2)return p[0]*60+p[1];if(p.length===3)return p[0]*3600+p[1]*60+p[2];return null}
 function show(id){document.getElementById(id).style.display='block'}function hide(id){document.getElementById(id).style.display='none'}
 
-initSurahSelect();initProfile();renderLib();
+
+
+if(document.readyState === 'loading'){
+  document.addEventListener('DOMContentLoaded',()=>{initSurahSelect();initProfile();renderLib();renderStats();});
+}else{
+  initSurahSelect();initProfile();renderLib();renderStats();
+}
 </script>
 </body>
 </html>
